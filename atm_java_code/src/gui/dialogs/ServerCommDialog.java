@@ -6,6 +6,8 @@ import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.CustomBillsProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
+import gui.language.Language;
+import gui.language.Languages;
 import server.BankingData;
 import server.GetInfo;
 
@@ -18,8 +20,8 @@ public abstract class ServerCommDialog extends BaseDialog {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-(height/2),500,height);
     }
     public void startTransaction() {
-        Thread keypad = new Thread(new CreateDialog());
-        keypad.start();
+        Thread transaction = new Thread(new CreateDialog(),"TransactionThread");
+        transaction.start();
 	}
     public void stopTransaction() {
         KeyCardProcessor.stopRfidScanner();
@@ -35,30 +37,31 @@ public abstract class ServerCommDialog extends BaseDialog {
         }
     }
     protected void handleServerResponseNotOK(String db) {
+        Language language = Languages.getLang();
         int status = GetInfo.getStatus();
         switch (status) {
             case GetInfo.BAD_REQUEST:
-                getDisplayText().setText("<html>Er ging iets fout.<br>Excuses voor het ongemak.</html>");
+                getDisplayText().setText(language.getInternal_error());
                 break;
             case GetInfo.UNAUTHORISED:
                 if (db.contains("noob-token")) {
-                    getDisplayText().setText("<html>Er ging iets fout.<br>Excuses voor het ongemak.</html>");
+                    getDisplayText().setText(language.getInternal_error());
                     return;
                 }
-                getDisplayText().setText("<html>Foute pincode<br>Pogingen resterend:"
+                getDisplayText().setText(language.getWrong_pin()
                     + getAttempts(db) + "</html>");
                 break;
             case GetInfo.FORBIDDEN:
-                getDisplayText().setText("Bankaccount geblokkeerd.");
+                getDisplayText().setText(language.getBlocked_account());
                 break;
             case GetInfo.NOT_FOUND:
-                getDisplayText().setText("<html>Bank of rekening<br>bestaat niet.</html>");
+                getDisplayText().setText(language.getNot_found());
                 break;
             case GetInfo.NO_BALLANCE:
-                getDisplayText().setText("Onvoldoende saldo");
+                getDisplayText().setText(language.getNo_balance());
                 break;
             case GetInfo.SERVER_ERROR:
-                getDisplayText().setText("<html>Servers niet beschikbaar<br/>Excuses voor het ongemak</html>");
+                getDisplayText().setText(language.getServer_error());
                 break;
             default:
                 System.out.println("A new responsecode just dropped!");
@@ -83,6 +86,14 @@ public abstract class ServerCommDialog extends BaseDialog {
         }
         public String getIban() {
             return iban;
+        }
+    }
+
+    protected static void sleep() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("Couldn't buy you time");
         }
     }
 }

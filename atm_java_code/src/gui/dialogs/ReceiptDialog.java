@@ -3,6 +3,7 @@ package gui.dialogs;
 import gui.BaseButton;
 import gui.BaseDialog;
 import gui.GUI;
+import gui.language.Languages;
 import gui.pages.HomePage;
 
 import javax.swing.*;
@@ -14,8 +15,8 @@ public class ReceiptDialog extends BaseDialog {
         super((GUI_WIDTH/2-250), GUI_HEIGHT/2+300, 500, 100);
         this.buttons = new YNButtons();
 
-        getDisplayText().setText("Wilt u een bonnetje?");
-        getDisplayText().setVisible(false);
+        langUpdate();
+        setVisible(false);
 
         page.add(getDisplayText());
         page.add(buttons.yesButton);
@@ -25,6 +26,12 @@ public class ReceiptDialog extends BaseDialog {
         getDisplayText().setVisible(visible);
         buttons.yesButton.setVisible(visible);
         buttons.noButton.setVisible(visible);
+    }
+
+    public void langUpdate() {
+        getDisplayText().setText(Languages.getLang().getReceipt_query());
+        buttons.yesButton.setText(Languages.getLang().getReceipt_aye());
+        buttons.noButton.setText(Languages.getLang().getReceipt_nay());
     }
 
     private static class YNButtons {
@@ -38,8 +45,6 @@ public class ReceiptDialog extends BaseDialog {
             yesButton.setForeground(Color.BLACK);
             yesButton.setBackground(Color.LIGHT_GRAY);
             yesButton.setBorderPainted(false);
-            yesButton.setVisible(false);
-            yesButton.setText("Ja");
             yesButton.addActionListener(e -> GUI.gotoPage(HomePage.KEY)); // TODO
 
             noButton = new JButton();
@@ -49,8 +54,6 @@ public class ReceiptDialog extends BaseDialog {
             noButton.setForeground(Color.BLACK);
             noButton.setBackground(Color.LIGHT_GRAY);
             noButton.setBorderPainted(false);
-            noButton.setVisible(false);
-            noButton.setText("Nee");
             noButton.addActionListener(e -> GUI.gotoPage(HomePage.KEY)); // TODO
         }
     }

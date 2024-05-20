@@ -1,5 +1,6 @@
 package gui.dialogs.prosessors;
 
+import gui.language.Languages;
 import serial.InputHandler;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import javax.swing.*;
 public class PinProcessor {
 	private volatile char keypress;
 	private final JLabel display;
-	private static final String TEXT = "Voer uw pincode in: ";
+	private static final String TEXT = Languages.getLang().getPin_query();
 	private String pin;
 	private static volatile boolean going;
 	public PinProcessor(JLabel display) {

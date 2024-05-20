@@ -1,5 +1,7 @@
 package gui;
 
+import gui.language.Language;
+
 import javax.swing.*;
 import java.awt.*;
 

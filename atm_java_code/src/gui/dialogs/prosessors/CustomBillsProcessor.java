@@ -1,5 +1,6 @@
 package gui.dialogs.prosessors;
 
+import gui.language.Languages;
 import serial.InputHandler;
 
 import javax.swing.*;
@@ -7,11 +8,6 @@ import javax.swing.*;
 public class CustomBillsProcessor {
 	private volatile char keypress;
 	private final JLabel display;
-	private static final String BILL5 = "<html>Briefjes van 5: ";
-	private static final String BILL10 = "<br><br>Briefjes van 10: ";
-	private static final String BILL20 = "<br><br>Briefjes van 20: ";
-	private static final String BILL50 = "<br><br>Briefjes van 50: ";
-	private static final String CAP = "</html>";
 	private int[] amounts = new int[4];
 	private static volatile boolean going;
 	public CustomBillsProcessor(JLabel display) {
@@ -44,7 +40,7 @@ public class CustomBillsProcessor {
 		while (true) {
 			synchronized (this) {
 				if (!going) throw new InterruptedException();
-				display.setText(BILL5 + amounts[0] + BILL10 + amounts[1] + BILL20 + amounts[2] + BILL50 + amounts[3] + CAP);
+				display.setText(toText(amounts));
 				wait();
 				if (keypress != 'K') {
 					processInput(amounts, keypress);
@@ -54,6 +50,14 @@ public class CustomBillsProcessor {
 				}
 			}
 		}
+	}
+	private String toText(char[] amounts) {
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < 4; i++) {
+			str.append(Languages.getLang().getBills_query()[i]);
+			str.append(amounts[i]);
+		}
+		return "<html>" + str + "</html>";
 	}
 	private boolean amountFilled(char[] amount) {
 		for (int i = 0; i < 4; i++) {

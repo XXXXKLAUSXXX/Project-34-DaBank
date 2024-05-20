@@ -17,6 +17,7 @@ public abstract class GUI {
     protected static int height;
     private static Timer timeOut = new Timer(60000, e -> timeoutAction());
     private static ArduinoSerial arduino;
+    private static String currentPage;
 
     public static void makeGUI() {
         try {
@@ -29,7 +30,7 @@ public abstract class GUI {
         height = tk.getScreenSize().height;
 
         try {
-            bankImg = new ImageIcon("resources/DABANKCOLLOR.png");
+            bankImg = new ImageIcon("resources/textures/DABANKCOLLOR.png");
         }catch (Exception e) {
             System.out.println("Image not found");
         }
@@ -40,7 +41,8 @@ public abstract class GUI {
         pages.put(FastWithdrawPage.KEY,new FastWithdrawPage());
         pages.put(CustomWithdrawPage.KEY,new CustomWithdrawPage());
         pages.put(WithdrawPage.KEY,new WithdrawPage());
-        pages.put(Eindscherm.KEY,new Eindscherm());
+        pages.put(LangPage.KEY, new LangPage());
+        //pages.put(Eindscherm.KEY,new Eindscherm());
 
         BufferedImage cursorImg = new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
         Cursor bankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
@@ -51,8 +53,10 @@ public abstract class GUI {
         for (BasePage page : pages.values()) {
             frame.add(page.getPage());
             page.setVisible(false);
+            page.langUpdate();
         }
         pages.get(HomePage.KEY).setVisible(true);
+        currentPage = HomePage.KEY;
         timeOut.stop();
         frame.getContentPane().setBackground(new Color(205,14,14));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -68,16 +72,18 @@ public abstract class GUI {
     private static void timeoutAction() {
         gotoPage(HomePage.KEY);
     }
+    public static void timerPing() {
+        timeOut.restart();
+    }
     public static void gotoPage(String key) {
         if (key.equals(HomePage.KEY)) {
             timeOut.stop();
         }
         else {
-            timeOut.restart();
+            timerPing();
         }
-        for (BasePage page : pages.values()) {
-            page.setVisible(false);
-        }
+        pages.get(currentPage).setVisible(false);
+        currentPage = key;
         pages.get(key).setVisible(true);
     }
 }

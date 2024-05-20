@@ -3,15 +3,16 @@ package gui.dialogs;
 import com.google.gson.Gson;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
+import gui.language.Languages;
 import server.BankingData;
 import server.GetInfo;
 
 import java.io.IOException;
 
-public class CheckBalanceDialog extends ServerCommDialog{
+public class BalanceDialog extends ServerCommDialog{
     private static final String API_ENDPOINT = "accountinfo";
     private final ReceiptDialog receiptDialog;
-    public CheckBalanceDialog(ReceiptDialog receiptDialog) {
+    public BalanceDialog(ReceiptDialog receiptDialog) {
         super();
         this.receiptDialog = receiptDialog;
     }
@@ -35,8 +36,10 @@ public class CheckBalanceDialog extends ServerCommDialog{
     private String toString(String json) {
         Gson gson = new Gson();
         BankingData a = gson.fromJson(json, BankingData.class);
-        return "<html>Naam: " + a.getFirstname() + ' ' + a.getLastname()
-                + "<br>Saldo: " + a.getBalance() + "</html>";
+        String toReturn = Languages.getLang().getBalance_info();
+        toReturn = toReturn.replace("%n",a.getFirstname() + ' ' + a.getLastname());
+        toReturn = toReturn.replace("%b",Integer.toString(a.getBalance()));
+        return toReturn;
     }
     @Override
     protected void startUp() {

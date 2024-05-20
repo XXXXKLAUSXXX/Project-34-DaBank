@@ -4,6 +4,7 @@ package gui.dialogs;
 import gui.dialogs.prosessors.CustomBillsProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
+import gui.language.Languages;
 import server.GetInfo;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class CustomWithdrawDialog extends ServerCommDialog {
                 System.out.println("Pinrequest went wrong");
             }
             if (GetInfo.getStatus() == 200) {
-                getDisplayText().setText("Transactie succes");
+                getDisplayText().setText(Languages.getLang().getOk());
                 System.out.println("OK");
             }
             else handleServerResponseNotOK(db);
@@ -42,8 +43,13 @@ public class CustomWithdrawDialog extends ServerCommDialog {
 			System.out.println(Arrays.toString(amounts));
 		} else {
             System.out.println("Couldn't get amount.");
+            getDisplayText().setText(Languages.getLang().getAmount_not_valid());
             return;
         }
+        int amount = getTotal(amounts);
+        getDisplayText().setText(Languages.getLang().getAmount_withdraw() + amount);
+        System.out.println(amount);
+        sleep();
 
         // keycard reader
         String keyCard;
@@ -64,7 +70,7 @@ public class CustomWithdrawDialog extends ServerCommDialog {
             System.out.println("Could not get pin.");
             return;
         }
-        comm(keyCard, pin, getTotal(amounts));
+        comm(keyCard, pin, amount);
     }
     private int getTotal(int[] amounts) {
         int total = 0;

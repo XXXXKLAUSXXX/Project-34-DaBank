@@ -3,6 +3,7 @@ package gui.dialogs;
 import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
+import gui.language.Languages;
 import server.GetInfo;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class FastWithdrawDialog extends ServerCommDialog {
                 System.out.println("Pinrequest went wrong");
             }
             if (GetInfo.getStatus() == 200) {
-                getDisplayText().setText("Transactie succes");
+                getDisplayText().setText(Languages.getLang().getOk());
                 System.out.println("OK");
             }
             else handleServerResponseNotOK(db);
@@ -36,16 +37,12 @@ public class FastWithdrawDialog extends ServerCommDialog {
         amount = round(amount);
         if (amount < 1) {
             System.out.println("Couldn't get amount.");
-            getDisplayText().setText("Bedrag is te klein");
+            getDisplayText().setText(Languages.getLang().getAmount_not_valid());
             return;
         }
-        getDisplayText().setText("Afgerond: " + amount);
+        getDisplayText().setText(Languages.getLang().getAmount_withdraw() + amount);
         System.out.println(amount);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            System.out.println("Couldn't buy you time");
-        }
+        sleep();
 
         // keycard reader
         String keyCard;

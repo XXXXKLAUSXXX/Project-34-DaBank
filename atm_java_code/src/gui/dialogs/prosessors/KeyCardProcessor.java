@@ -1,5 +1,6 @@
 package gui.dialogs.prosessors;
 
+import gui.language.Languages;
 import serial.InputHandler;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import javax.swing.*;
 public class KeyCardProcessor {
 	private volatile String rfid;
 	private final JLabel display;
-	private static final String TEXT = "Scan uw pinpas.";
+	private static final String TEXT = Languages.getLang().getKeycard_query();
 	private static volatile boolean going;
 	public KeyCardProcessor(JLabel display) {
 		this.display = display;

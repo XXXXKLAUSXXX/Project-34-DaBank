@@ -48,4 +48,9 @@ public class Eindscherm extends BasePage {
             }
         }, 600, 600); // Start after 1 second, repeat every 1 second*/
     }
+
+    @Override
+    public void langUpdate() {
+
+    }
 }

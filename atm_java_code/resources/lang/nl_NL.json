@@ -1,0 +1,44 @@
+{
+	"lang": "nl_NL",
+
+	"choice_name": "Hoofdmenu",
+	"balance_name": "Saldo checken",
+	"withdraw_menu_name": "Geld opnemen",
+	"custom_withdraw_name": "Zelf briefjes kiezen",
+	"fast_withdraw_name": "Snel geld opnemen",
+
+	"home_start": "Klik waar dan ook om verder te gaan",
+	"home_button": "Stop transactie",
+	"back_button": "Stap terug",
+	"main_menu_button": "Hoofdmenu",
+	"balance_button": "Saldo checken",
+	"withdraw_menu_button": "Geld opnemen",
+	"custom_withdraw_button": "Zelf briefjes kiezen",
+	"fast_withdraw_button": "Snel geld opnemen",
+	"lang_button": "Taal",
+
+	"receipt_query": "Wilt u een bonnetje?",
+	"receipt_aye": "Ja",
+	"receipt_nay": "Nee",
+	"amount_not_valid": "Bedrag is te klein",
+	"amount_withdraw": "Totaal bedrag: ",
+	"balance_info": "<html>Naam: %n<br>Saldo: %b</html>",
+
+	"amount_query": "Voer hoeveelheid in: ",
+	"bills_query": [
+		"Briefjes van 5: ",
+		"<br><br>Briefjes van 10: ",
+		"<br><br>Briefjes van 20: ",
+		"<br><br>Briefjes van 50: "
+	],
+	"keycard_query": "Scan uw pinpas.",
+	"pin_query": "Voer uw pincode in: ",
+
+	"ok": "Transactie succes",
+	"internal_error": "<html>Er ging iets fout.<br>Excuses voor het ongemak.</html>",
+	"wrong_pin": "<html>Foute pincode<br>Pogingen resterend: ",
+	"blocked_account": "Bankaccount geblokkeerd.",
+	"not_found": "<html>Bank of rekening<br>bestaat niet.</html>",
+	"no_balance": "Onvoldoende saldo",
+	"server_error": "<html>Servers niet beschikbaar<br/>Excuses voor het ongemak</html>"
+}

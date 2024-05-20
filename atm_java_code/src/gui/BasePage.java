@@ -1,9 +1,13 @@
 package gui;
 
+import gui.language.Language;
+import gui.language.Languages;
+
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class BasePage {
+    protected final JLabel title = titlePanel();
     protected static final int GUI_WIDTH = GUI.width;
     protected static final int GUI_HEIGHT = GUI.height;
     protected static final ImageIcon bankImg = GUI.bankImg;
@@ -30,8 +34,8 @@ public abstract class BasePage {
         button.setBorderPainted(false);
         return button;
     }
-    protected static JLabel titlePanel(String text) {
-        JLabel title = new JLabel(text);
+    protected static JLabel titlePanel() {
+        JLabel title = new JLabel();
         title.setFont(new Font(Font.SANS_SERIF,Font.BOLD,32));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setForeground(Color.BLACK);
@@ -40,4 +44,5 @@ public abstract class BasePage {
         title.setBackground(new Color(215, 170, 35));
         return title;
     }
+    public abstract void langUpdate();
 }
