@@ -7,7 +7,7 @@
 	"custom_withdraw_name": "Zelf briefjes kiezen",
 	"fast_withdraw_name": "Snel geld opnemen",
 
-	"home_start": "Klik waar dan ook om verder te gaan",
+	"home_start": "Klik waar dan ook om te beginnen",
 	"home_button": "Stop transactie",
 	"back_button": "Stap terug",
 	"main_menu_button": "Hoofdmenu",
@@ -22,7 +22,7 @@
 	"receipt_nay": "Nee",
 	"amount_not_valid": "Bedrag is te klein",
 	"amount_withdraw": "Totaal bedrag: ",
-	"balance_info": "<html>Naam: %n<br>Saldo: %b</html>",
+	"balance_info": "Naam: %n<br>Saldo: %b",
 
 	"amount_query": "Voer hoeveelheid in: ",
 	"bills_query": [
@@ -35,10 +35,10 @@
 	"pin_query": "Voer uw pincode in: ",
 
 	"ok": "Transactie succes",
-	"internal_error": "<html>Er ging iets fout.<br>Excuses voor het ongemak.</html>",
-	"wrong_pin": "<html>Foute pincode<br>Pogingen resterend: ",
+	"internal_error": "Er ging iets fout.<br>Excuses voor het ongemak.",
+	"wrong_pin": "Foute pincode<br>Pogingen resterend: ",
 	"blocked_account": "Bankaccount geblokkeerd.",
-	"not_found": "<html>Bank of rekening<br>bestaat niet.</html>",
+	"not_found": "Bank of rekening<br>bestaat niet.",
 	"no_balance": "Onvoldoende saldo",
-	"server_error": "<html>Servers niet beschikbaar<br/>Excuses voor het ongemak</html>"
+	"server_error": "Servers niet beschikbaar<br/>Excuses voor het ongemak"
 }

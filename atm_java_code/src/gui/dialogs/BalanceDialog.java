@@ -11,10 +11,9 @@ import java.io.IOException;
 
 public class BalanceDialog extends ServerCommDialog{
     private static final String API_ENDPOINT = "accountinfo";
-    private final ReceiptDialog receiptDialog;
+
     public BalanceDialog(ReceiptDialog receiptDialog) {
-        super();
-        this.receiptDialog = receiptDialog;
+        super(receiptDialog);
     }
 
     protected void comm(String keyCard, String code) {
@@ -39,7 +38,7 @@ public class BalanceDialog extends ServerCommDialog{
         String toReturn = Languages.getLang().getBalance_info();
         toReturn = toReturn.replace("%n",a.getFirstname() + ' ' + a.getLastname());
         toReturn = toReturn.replace("%b",Integer.toString(a.getBalance()));
-        return toReturn;
+        return "<html>" + toReturn + "</html>";
     }
     @Override
     protected void startUp() {

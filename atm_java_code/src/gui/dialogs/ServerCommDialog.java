@@ -13,11 +13,14 @@ import server.GetInfo;
 
 public abstract class ServerCommDialog extends BaseDialog {
     protected static final String BANK_IP = "http://145.24.223.74:8100/api/";
-    public ServerCommDialog() {
+    protected final ReceiptDialog receiptDialog;
+    public ServerCommDialog(ReceiptDialog receiptDialog) {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-100,500,200);
+        this.receiptDialog = receiptDialog;
     }
-    public ServerCommDialog(int height) {
+    public ServerCommDialog(ReceiptDialog receiptDialog, int height) {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-(height/2),500,height);
+        this.receiptDialog = receiptDialog;
     }
     public void startTransaction() {
         Thread transaction = new Thread(new CreateDialog(),"TransactionThread");
@@ -41,27 +44,27 @@ public abstract class ServerCommDialog extends BaseDialog {
         int status = GetInfo.getStatus();
         switch (status) {
             case GetInfo.BAD_REQUEST:
-                getDisplayText().setText(language.getInternal_error());
+                getDisplayText().setText("<html>" + language.getInternal_error() + "</html>");
                 break;
             case GetInfo.UNAUTHORISED:
                 if (db.contains("noob-token")) {
-                    getDisplayText().setText(language.getInternal_error());
+                    getDisplayText().setText("<html>" + language.getInternal_error() + "</html>");
                     return;
                 }
-                getDisplayText().setText(language.getWrong_pin()
+                getDisplayText().setText("<html>" + language.getWrong_pin()
                     + getAttempts(db) + "</html>");
                 break;
             case GetInfo.FORBIDDEN:
                 getDisplayText().setText(language.getBlocked_account());
                 break;
             case GetInfo.NOT_FOUND:
-                getDisplayText().setText(language.getNot_found());
+                getDisplayText().setText("<html>" + language.getNot_found() + "</html>");
                 break;
             case GetInfo.NO_BALLANCE:
                 getDisplayText().setText(language.getNo_balance());
                 break;
             case GetInfo.SERVER_ERROR:
-                getDisplayText().setText(language.getServer_error());
+                getDisplayText().setText("<html>" + language.getServer_error() + "</html>");
                 break;
             default:
                 System.out.println("A new responsecode just dropped!");

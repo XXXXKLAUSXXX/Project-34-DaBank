@@ -8,7 +8,7 @@ import javax.swing.*;
 public class PinProcessor {
 	private volatile char keypress;
 	private final JLabel display;
-	private static final String TEXT = Languages.getLang().getPin_query();
+	private final String TEXT = Languages.getLang().getPin_query();
 	private String pin;
 	private static volatile boolean going;
 	public PinProcessor(JLabel display) {

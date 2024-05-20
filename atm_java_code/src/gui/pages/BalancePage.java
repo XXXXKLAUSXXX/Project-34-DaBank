@@ -9,17 +9,14 @@ import gui.language.Languages;
 
 public class BalancePage extends ServerCommPage {
     public static final String KEY = "BALANCEPAGE";
-    private final ReceiptDialog receiptDialog;
+    private final BackButton backButton = new BackButton(ChoicePage.KEY);
     public BalancePage() {
         super();
-        receiptDialog = new ReceiptDialog(getPage());
 
         serverCommDialog = new BalanceDialog(receiptDialog);
 
         page.add(title);
-        page.add(new StopTransactionButton().getButton());
-        page.add(new BackButton(ChoicePage.KEY).getButton());
-        page.add(new MainPageButton().getButton());
+        page.add(backButton.getButton());
         page.add(serverCommDialog.getDisplayText());
     }
     public void setVisible(boolean visible) {
@@ -29,6 +26,8 @@ public class BalancePage extends ServerCommPage {
 
     @Override
     public void langUpdate() {
+        super.langUpdate();
         title.setText(Languages.getLang().getBalance_name());
+        backButton.langUpdate();
     }
 }

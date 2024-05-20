@@ -8,7 +8,7 @@ import javax.swing.*;
 public class AmountProcessor {
     private volatile char keypress;
     private final JLabel display;
-    private static final String TEXT = Languages.getLang().getAmount_query();
+    private final String TEXT = Languages.getLang().getAmount_query();
     private int amount;
     private static volatile boolean going;
     public AmountProcessor(JLabel display) {

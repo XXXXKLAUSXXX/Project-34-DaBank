@@ -8,20 +8,21 @@ import gui.language.Languages;
 
 public class CustomWithdrawPage extends ServerCommPage {
     public static final String KEY = "CUSTOMWITHDRAWPAGE"; // Correct key for WithdrawPage
+    private final BackButton backButton = new BackButton(WithdrawPage.KEY);
     public CustomWithdrawPage() {
         super();
 
-        serverCommDialog = new CustomWithdrawDialog();
+        serverCommDialog = new CustomWithdrawDialog(receiptDialog);
 
         page.add(title);
-        page.add(new StopTransactionButton().getButton());
-        page.add(new BackButton(WithdrawPage.KEY).getButton());
-        page.add(new MainPageButton().getButton());
+        page.add(backButton.getButton());
         page.add(serverCommDialog.getDisplayText());
     }
 
     @Override
     public void langUpdate() {
+        super.langUpdate();
         title.setText(Languages.getLang().getCustom_withdraw_name());
+        backButton.langUpdate();
     }
 }

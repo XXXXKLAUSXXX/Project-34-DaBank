@@ -86,4 +86,9 @@ public abstract class GUI {
         currentPage = key;
         pages.get(key).setVisible(true);
     }
+    public static void updateLanguage() {
+        for (BasePage page : pages.values()) {
+            page.langUpdate();
+        }
+    }
 }

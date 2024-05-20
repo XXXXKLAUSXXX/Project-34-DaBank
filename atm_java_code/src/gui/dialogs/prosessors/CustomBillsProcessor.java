@@ -8,7 +8,7 @@ import javax.swing.*;
 public class CustomBillsProcessor {
 	private volatile char keypress;
 	private final JLabel display;
-	private int[] amounts = new int[4];
+	private final int[] amounts = new int[4];
 	private static volatile boolean going;
 	public CustomBillsProcessor(JLabel display) {
 		this.display = display;

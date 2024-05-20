@@ -10,6 +10,11 @@ import java.io.IOException;
 
 public class FastWithdrawDialog extends ServerCommDialog {
     private static final String API_ENDPOINT = "withdraw";
+
+    public FastWithdrawDialog(ReceiptDialog receiptDialog) {
+        super(receiptDialog);
+    }
+
     protected void comm(String keyCard, String code, int amount) {
         if (amount > 1) {
             String db = "";
@@ -22,6 +27,7 @@ public class FastWithdrawDialog extends ServerCommDialog {
             }
             if (GetInfo.getStatus() == 200) {
                 getDisplayText().setText(Languages.getLang().getOk());
+                receiptDialog.setVisible(true);
                 System.out.println("OK");
             }
             else handleServerResponseNotOK(db);

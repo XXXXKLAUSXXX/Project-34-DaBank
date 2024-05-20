@@ -12,8 +12,8 @@ import java.util.Arrays;
 
 public class CustomWithdrawDialog extends ServerCommDialog {
     private static final String API_ENDPOINT = "withdraw";
-    public CustomWithdrawDialog() {
-        super(300);
+    public CustomWithdrawDialog(ReceiptDialog receiptDialog) {
+        super(receiptDialog,300);
     }
     protected void comm(String keyCard, String code, int amount) {
         if (amount > 1) {
@@ -27,6 +27,7 @@ public class CustomWithdrawDialog extends ServerCommDialog {
             }
             if (GetInfo.getStatus() == 200) {
                 getDisplayText().setText(Languages.getLang().getOk());
+                receiptDialog.setVisible(true);
                 System.out.println("OK");
             }
             else handleServerResponseNotOK(db);

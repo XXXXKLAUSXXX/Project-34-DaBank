@@ -8,7 +8,7 @@ import javax.swing.*;
 public class KeyCardProcessor {
 	private volatile String rfid;
 	private final JLabel display;
-	private static final String TEXT = Languages.getLang().getKeycard_query();
+	private final String TEXT = Languages.getLang().getKeycard_query();
 	private static volatile boolean going;
 	public KeyCardProcessor(JLabel display) {
 		this.display = display;
