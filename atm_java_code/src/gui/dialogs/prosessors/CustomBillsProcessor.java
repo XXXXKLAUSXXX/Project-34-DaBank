@@ -62,12 +62,11 @@ public class CustomBillsProcessor {
 				return false;
 			}
 		}
-		System.out.println("Missed");
 		return true;
 	}
 
 	private void keyProduce() throws InterruptedException {
-		InputHandler.setDataNew(false);
+		InputHandler.setKey(false);
 		while (true) {
 			synchronized (this) {
 				if (!going) {
@@ -75,9 +74,9 @@ public class CustomBillsProcessor {
 					throw new InterruptedException();
 				}
 				wait(10);
-				if (InputHandler.isNewData()) {
+				if (InputHandler.isNewKey()) {
 					keypress = InputHandler.getKeyPress();
-					InputHandler.setDataNew(false);
+					InputHandler.setKey(false);
 					System.out.println(keypress);
 					notify();
 				}

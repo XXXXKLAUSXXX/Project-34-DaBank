@@ -5,11 +5,12 @@ import gui.BaseDialog;
 import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.CustomBillsProcessor;
 import gui.dialogs.prosessors.PinProcessor;
-import gui.dialogs.prosessors.RfidProcessor;
+import gui.dialogs.prosessors.KeyCardProcessor;
 import server.BankingData;
 import server.GetInfo;
 
 public abstract class ServerCommDialog extends BaseDialog {
+    protected static final String BANK_IP = "http://145.24.223.74:8100/api/";
     public ServerCommDialog() {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-100,500,200);
     }
@@ -21,7 +22,7 @@ public abstract class ServerCommDialog extends BaseDialog {
         keypad.start();
 	}
     public void stopTransaction() {
-        RfidProcessor.stopRfidScanner();
+        KeyCardProcessor.stopRfidScanner();
         PinProcessor.stopKeypad();
         AmountProcessor.stopKeypad();
         CustomBillsProcessor.stopKeypad();
@@ -36,23 +37,27 @@ public abstract class ServerCommDialog extends BaseDialog {
     protected void handleServerResponseNotOK(String db) {
         int status = GetInfo.getStatus();
         switch (status) {
-            case 400:
+            case GetInfo.BAD_REQUEST:
                 getDisplayText().setText("<html>Er ging iets fout.<br>Excuses voor het ongemak.</html>");
                 break;
-            case 401:
+            case GetInfo.UNAUTHORISED:
+                if (db.contains("noob-token")) {
+                    getDisplayText().setText("<html>Er ging iets fout.<br>Excuses voor het ongemak.</html>");
+                    return;
+                }
                 getDisplayText().setText("<html>Foute pincode<br>Pogingen resterend:"
                     + getAttempts(db) + "</html>");
                 break;
-            case 403:
+            case GetInfo.FORBIDDEN:
                 getDisplayText().setText("Bankaccount geblokkeerd.");
                 break;
-            case 404:
+            case GetInfo.NOT_FOUND:
                 getDisplayText().setText("<html>Bank of rekening<br>bestaat niet.</html>");
                 break;
-            case 412:
+            case GetInfo.NO_BALLANCE:
                 getDisplayText().setText("Onvoldoende saldo");
                 break;
-            case 500:
+            case GetInfo.SERVER_ERROR:
                 getDisplayText().setText("<html>Servers niet beschikbaar<br/>Excuses voor het ongemak</html>");
                 break;
             default:
@@ -63,5 +68,21 @@ public abstract class ServerCommDialog extends BaseDialog {
         Gson gson = new Gson();
         BankingData a = gson.fromJson(json, BankingData.class);
         return a.getAttempts_remaining();
+    }
+    protected final class KeyCard {
+        private final String uid;
+        private final String iban;
+        KeyCard(String keyCard) {
+            this.uid = keyCard.substring(0,8);
+            System.out.println(uid);
+            this.iban = keyCard.substring(8);
+            System.out.println(iban);
+        }
+        public String getUid() {
+            return uid;
+        }
+        public String getIban() {
+            return iban;
+        }
     }
 }

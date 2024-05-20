@@ -1,23 +1,21 @@
 package gui.dialogs;
 
-import com.google.gson.Gson;
-import gui.GUI;
 import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.PinProcessor;
-import gui.dialogs.prosessors.RfidProcessor;
-import gui.pages.HomePage;
-import server.BankingData;
+import gui.dialogs.prosessors.KeyCardProcessor;
 import server.GetInfo;
 
 import java.io.IOException;
 
 public class FastWithdrawDialog extends ServerCommDialog {
-    protected void comm(String rfid, String code, int amount) {
+    private static final String API_ENDPOINT = "withdraw";
+    protected void comm(String keyCard, String code, int amount) {
         if (amount > 1) {
             String db = "";
+            KeyCard card = new KeyCard(keyCard);
             try {
-                db = GetInfo.post("http://145.24.223.74:8100/api/withdraw",
-                        "{\"target\": \"im00imdb0123456789\",\"uid\": \"" + rfid + "\",\"pincode\":" + code + ",\"amount\": " + amount + "}");
+                db = GetInfo.post(BANK_IP + API_ENDPOINT,
+                        "{\"amount\": " + amount + ",\"target\": " + card.getIban() + ",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
             } catch (IOException e) {
                 System.out.println("Pinrequest went wrong");
             }
@@ -49,15 +47,15 @@ public class FastWithdrawDialog extends ServerCommDialog {
             System.out.println("Couldn't buy you time");
         }
 
-        // rfid reader
-        String rfid = "FFFFFFFF";
-//        RfidProcessor rfidProcessor = new RfidProcessor(getDisplayText());
-//        rfid = rfidProcessor.getRfid();
-//        if (rfid != null) System.out.println(rfid);
-//        else {
-//            System.out.println("Could not get rfid.");
-//            return;
-//        }
+        // keycard reader
+        String keyCard;
+        KeyCardProcessor keyCardProcessor = new KeyCardProcessor(getDisplayText());
+        keyCard = keyCardProcessor.getRfid();
+        if (keyCard != null) System.out.println(keyCard);
+        else {
+            System.out.println("Could not get keycard.");
+            return;
+        }
 
         // pincode
         String pin;
@@ -68,7 +66,7 @@ public class FastWithdrawDialog extends ServerCommDialog {
             System.out.println("Could not get pin.");
             return;
         }
-        comm(rfid, pin, amount);
+        comm(keyCard, pin, amount);
     }
     private static int round(int amount) {
         if (amount % 5 < 3) amount -= (amount % 5);

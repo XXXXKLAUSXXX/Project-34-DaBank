@@ -8,7 +8,7 @@ public class ArduinoSerial {
     private ArduinoHandler arduinoHandler;
     public ArduinoSerial() throws SerialPortInvalidPortException {
         serialPort = SerialPort.getCommPort("/dev/ttyACM0");
-        serialPort.setComPortParameters(115200,8,1,0);
+        serialPort.setComPortParameters(460800,8,1,0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 6);
 
         if(!serialPort.openPort()) {

@@ -1,11 +1,21 @@
 package server;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class GetInfo {
+    // response codes
+    public static final int OK = 200;
+    public static final int BAD_REQUEST = 400;
+    public static final int UNAUTHORISED = 401;
+    public static final int FORBIDDEN = 403;
+    public static final int NOT_FOUND = 404;
+    public static final int NO_BALLANCE = 412;
+    public static final int SERVER_ERROR = 500;
+
     private static final String USER_AGENT = "BANK/DA";
     private static int status;
     private static final String NOOBTOKEN;
@@ -18,9 +28,9 @@ public class GetInfo {
         }
     }
 
-    public static String post(String url, String json) throws IOException {
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    public static String post(String urlString, String json) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", USER_AGENT);
         con.setRequestProperty("Content-Type", "application/json");
@@ -35,7 +45,7 @@ public class GetInfo {
         status = con.getResponseCode();
         System.out.println("GET Response code: " + status);
 
-        if (status == HttpURLConnection.HTTP_OK) {
+        if (status == OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
             String inputLine;
             StringBuffer response = new StringBuffer();
@@ -70,7 +80,7 @@ public class GetInfo {
         status = con.getResponseCode();
         System.out.println("Get response code: " + status);
 
-        if (status == HttpURLConnection.HTTP_OK) {
+        if (status == OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
             String inputLine;
             StringBuffer response = new StringBuffer();

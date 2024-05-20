@@ -3,21 +3,24 @@ package gui.dialogs;
 
 import gui.dialogs.prosessors.CustomBillsProcessor;
 import gui.dialogs.prosessors.PinProcessor;
+import gui.dialogs.prosessors.KeyCardProcessor;
 import server.GetInfo;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class CustomWithdrawDialog extends ServerCommDialog {
+    private static final String API_ENDPOINT = "withdraw";
     public CustomWithdrawDialog() {
         super(300);
     }
-    protected void comm(String rfid, String code, int amount) {
+    protected void comm(String keyCard, String code, int amount) {
         if (amount > 1) {
             String db = "";
+            KeyCard card = new KeyCard(keyCard);
             try {
-                db = GetInfo.post("http://145.24.223.74:8100/api/withdraw",
-                        "{\"target\": \"im00imdb0123456789\",\"uid\": \"FFFFFFFF\",\"pincode\":" + code + ",\"amount\": " + amount + "}");
+                db = GetInfo.post(BANK_IP + API_ENDPOINT,
+                        "{\"amount\": " + amount + ",\"target\": \"" + card.getIban() + "\",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
             } catch (IOException e) {
                 System.out.println("Pinrequest went wrong");
             }
@@ -42,15 +45,15 @@ public class CustomWithdrawDialog extends ServerCommDialog {
             return;
         }
 
-        // rfid reader
-        String rfid = "FFFFFFFF";
-//        RfidProcessor rfidProcessor = new RfidProcessor(getDisplayText());
-//        rfid = rfidProcessor.getRfid();
-//        if (rfid != null) System.out.println(rfid);
-//        else {
-//            System.out.println("Could not get rfid.");
-//            return;
-//        }
+        // keycard reader
+        String keyCard;
+        KeyCardProcessor keyCardProcessor = new KeyCardProcessor(getDisplayText());
+        keyCard = keyCardProcessor.getRfid();
+        if (keyCard != null) System.out.println(keyCard);
+        else {
+            System.out.println("Could not get keycard.");
+            return;
+        }
 
         // pincode
         String pin;
@@ -61,7 +64,7 @@ public class CustomWithdrawDialog extends ServerCommDialog {
             System.out.println("Could not get pin.");
             return;
         }
-        comm(rfid, pin, getTotal(amounts));
+        comm(keyCard, pin, getTotal(amounts));
     }
     private int getTotal(int[] amounts) {
         int total = 0;
