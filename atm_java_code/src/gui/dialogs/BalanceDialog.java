@@ -20,8 +20,8 @@ public class BalanceDialog extends ServerCommDialog{
         String db = "";
         KeyCard card = new KeyCard(keyCard);
         try {
-            db = GetInfo.post(BANK_IP + API_ENDPOINT,
-                    "{\"target\": \"" + card.getIban() + "\",\"pincode\": " + code + ",\"uid\": \"" + card.getUid() + "\"}");
+            db = GetInfo.post(BANK_IP + API_ENDPOINT + "?target=" + card.getIban(),
+                    "{\"pincode\": " + code + ",\"uid\": \"" + card.getUid() + "\"}");
         } catch (IOException e) {
             System.out.println("Balance check went wrong");
         }

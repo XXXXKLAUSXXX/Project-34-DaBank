@@ -1,7 +1,8 @@
 package gui.dialogs.prosessors;
 
 import gui.language.Languages;
-import serial.InputHandler;
+import hardware.Bills;
+import hardware.serial.InputHandler;
 
 import javax.swing.*;
 
@@ -38,6 +39,11 @@ public class CustomBillsProcessor {
 	private char[] keyConsume() throws InterruptedException {
 		char[] amounts = {'\u0000','\u0000','\u0000','\u0000'};
 		while (true) {
+			for (int i = 0; i < 4; i++) {
+				if (Bills.check(i) == 0) {
+					amounts[i] = '0';
+				}
+			}
 			synchronized (this) {
 				if (!going) throw new InterruptedException();
 				display.setText(toText(amounts));
@@ -93,8 +99,8 @@ public class CustomBillsProcessor {
 			case '/':
 				break;
 			case 'D':
-				for (int i = 3; i > 0; i--) {
-					if (amounts[i] != '\u0000') {
+				for (int i = 3; i >= 0; i--) {
+					if (amounts[i] != '\u0000' && Bills.check(i) != 0) {
 						amounts[i] = '\u0000';
 						return;
 					}
@@ -108,7 +114,8 @@ public class CustomBillsProcessor {
 			default:
 				for (int i = 0; i < 4; i++) {
 					if (amounts[i] == '\u0000') {
-						amounts[i] = input;
+						amounts[i] = (Bills.check(i) >= Integer.parseInt(String.valueOf(input)))
+								? input : Integer.toString(Bills.check(i)).toCharArray()[0];
 						return;
 					}
 				}

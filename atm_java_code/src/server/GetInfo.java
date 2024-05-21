@@ -1,8 +1,7 @@
 package server;
 
-import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.*;
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -30,7 +29,9 @@ public class GetInfo {
 
     public static String post(String urlString, String json) throws IOException {
         URL url = new URL(urlString);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection.setDefaultSSLSocketFactory(Certificate.getSc().getSocketFactory());
+        HttpsURLConnection.setDefaultHostnameVerifier(Certificate.getValidHost());
+        HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", USER_AGENT);
         con.setRequestProperty("Content-Type", "application/json");
@@ -72,7 +73,9 @@ public class GetInfo {
     }
     public static String get(String url) throws IOException {
         URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        HttpsURLConnection.setDefaultSSLSocketFactory(Certificate.getSc().getSocketFactory());
+        HttpsURLConnection.setDefaultHostnameVerifier(Certificate.getValidHost());
+        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", USER_AGENT);
         con.setRequestProperty("NOOB-TOKEN", NOOBTOKEN);

@@ -2,7 +2,7 @@ package gui;
 
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 import gui.pages.*;
-import serial.ArduinoSerial;
+import hardware.serial.ArduinoSerial;
 
 import javax.swing.*;
 import java.awt.*;

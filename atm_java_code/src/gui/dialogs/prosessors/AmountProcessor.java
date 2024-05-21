@@ -1,7 +1,8 @@
 package gui.dialogs.prosessors;
 
 import gui.language.Languages;
-import serial.InputHandler;
+import hardware.Bills;
+import hardware.serial.InputHandler;
 
 import javax.swing.*;
 
@@ -41,6 +42,7 @@ public class AmountProcessor {
         while (true) {
             synchronized (this) {
                 if (!going) throw new InterruptedException();
+                amount = checkAmount(amount);
                 display.setText(TEXT + amount);
                 wait();
                 if (keypress != 'K') {
@@ -52,6 +54,16 @@ public class AmountProcessor {
                 }
             }
         }
+    }
+    private String checkAmount(String amount) {
+        try{
+            if (Bills.getTotal() < Integer.parseInt(amount)) {
+                amount = Integer.toString(Bills.getTotal());
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Couldn't parse amount");
+        }
+        return amount;
     }
 
     private void keyProduce() throws InterruptedException {

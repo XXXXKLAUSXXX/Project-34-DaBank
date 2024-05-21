@@ -4,6 +4,7 @@ import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Languages;
+import hardware.Bills;
 import server.GetInfo;
 
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class FastWithdrawDialog extends ServerCommDialog {
             String db = "";
             KeyCard card = new KeyCard(keyCard);
             try {
-                db = GetInfo.post(BANK_IP + API_ENDPOINT,
-                        "{\"amount\": " + amount + ",\"target\": " + card.getIban() + ",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
+                db = GetInfo.post(BANK_IP + API_ENDPOINT + "?target=" + card.getIban(),
+                        "{\"amount\": " + amount + ",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
             } catch (IOException e) {
                 System.out.println("Pinrequest went wrong");
             }
@@ -75,5 +76,20 @@ public class FastWithdrawDialog extends ServerCommDialog {
         if (amount % 5 < 3) amount -= (amount % 5);
         else amount += 5 - (amount % 5);
         return amount;
+    }
+    private static int[] toBills(int amount) {
+        int[] bills = new int[4];
+        for (int i = 3; i >= 0; i--) {
+            int tmpAmount = amount / Bills.getMultiplier()[i];
+            if (Bills.check(i) < tmpAmount) {
+                bills[i] = Bills.check(i);
+                amount -= Bills.getMultiplier()[i] * Bills.check(i);
+            }
+            else {
+                bills[i] = tmpAmount;
+                amount %= Bills.getMultiplier()[i];
+            }
+        }
+        return bills;
     }
 }

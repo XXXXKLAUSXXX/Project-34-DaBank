@@ -1,7 +1,7 @@
 package gui.dialogs.prosessors;
 
 import gui.language.Languages;
-import serial.InputHandler;
+import hardware.serial.InputHandler;
 
 import javax.swing.*;
 

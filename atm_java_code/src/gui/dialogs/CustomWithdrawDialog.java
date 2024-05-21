@@ -5,6 +5,7 @@ import gui.dialogs.prosessors.CustomBillsProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Languages;
+import hardware.Bills;
 import server.GetInfo;
 
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class CustomWithdrawDialog extends ServerCommDialog {
             String db = "";
             KeyCard card = new KeyCard(keyCard);
             try {
-                db = GetInfo.post(BANK_IP + API_ENDPOINT,
-                        "{\"amount\": " + amount + ",\"target\": \"" + card.getIban() + "\",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
+                db = GetInfo.post(BANK_IP + API_ENDPOINT + "?target=" + card.getIban(),
+                        "{\"amount\": " + amount + ",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
             } catch (IOException e) {
                 System.out.println("Pinrequest went wrong");
             }
@@ -75,8 +76,8 @@ public class CustomWithdrawDialog extends ServerCommDialog {
     }
     private int getTotal(int[] amounts) {
         int total = 0;
-        for (int amount : amounts) {
-            total += amount;
+        for (int i = 0; i < 4; i++) {
+            total += amounts[i] * Bills.getMultiplier()[i];
         }
         return total;
     }

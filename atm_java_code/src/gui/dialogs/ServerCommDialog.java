@@ -12,7 +12,7 @@ import server.BankingData;
 import server.GetInfo;
 
 public abstract class ServerCommDialog extends BaseDialog {
-    protected static final String BANK_IP = "http://145.24.223.74:8100/api/";
+    protected static final String BANK_IP = "https://145.24.223.74:8001/api/";
     protected final ReceiptDialog receiptDialog;
     public ServerCommDialog(ReceiptDialog receiptDialog) {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-100,500,200);
@@ -67,7 +67,7 @@ public abstract class ServerCommDialog extends BaseDialog {
                 getDisplayText().setText("<html>" + language.getServer_error() + "</html>");
                 break;
             default:
-                System.out.println("A new responsecode just dropped!");
+                System.out.println("A new responsecode just dropped! " + GetInfo.getStatus());
         }
     }
     protected int getAttempts(String json) {

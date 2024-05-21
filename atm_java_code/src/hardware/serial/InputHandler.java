@@ -1,4 +1,4 @@
-package serial;
+package hardware.serial;
 
 public abstract class InputHandler {
     private static char keyPress = '/';

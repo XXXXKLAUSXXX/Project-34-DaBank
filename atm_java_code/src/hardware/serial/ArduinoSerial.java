@@ -1,4 +1,4 @@
-package serial;
+package hardware.serial;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
