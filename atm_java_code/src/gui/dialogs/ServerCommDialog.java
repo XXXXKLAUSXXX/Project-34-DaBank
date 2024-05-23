@@ -2,17 +2,20 @@ package gui.dialogs;
 
 import com.google.gson.Gson;
 import gui.BaseDialog;
+import gui.GUI;
 import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.CustomBillsProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Language;
 import gui.language.Languages;
+import gui.pages.ChoicePage;
+import gui.pages.HomePage;
 import server.BankingData;
 import server.GetInfo;
 
 public abstract class ServerCommDialog extends BaseDialog {
-    protected static final String BANK_IP = "https://145.24.223.74:8001/api/";
+    protected static final String BANK_IP = "https://145.24.223.74:8001/endme/";
     protected final ReceiptDialog receiptDialog;
     public ServerCommDialog(ReceiptDialog receiptDialog) {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-100,500,200);
@@ -69,20 +72,26 @@ public abstract class ServerCommDialog extends BaseDialog {
             default:
                 System.out.println("A new responsecode just dropped! " + GetInfo.getStatus());
         }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("Couldn't buy time");
+        }
+        GUI.gotoPage(ChoicePage.KEY);
     }
     protected int getAttempts(String json) {
         Gson gson = new Gson();
         BankingData a = gson.fromJson(json, BankingData.class);
         return a.getAttempts_remaining();
     }
-    protected final class KeyCard {
+    protected static final class KeyCard {
         private final String uid;
         private final String iban;
         KeyCard(String keyCard) {
-            this.uid = keyCard.substring(0,8);
-            System.out.println(uid);
+            this.uid = keyCard.substring(0,8).toUpperCase();
+            System.out.println("uid: " + uid);
             this.iban = keyCard.substring(8);
-            System.out.println(iban);
+            System.out.println("IBAN: " + iban);
         }
         public String getUid() {
             return uid;

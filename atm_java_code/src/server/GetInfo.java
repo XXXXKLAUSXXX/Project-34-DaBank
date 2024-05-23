@@ -44,7 +44,7 @@ public class GetInfo {
         out.close();
 
         status = con.getResponseCode();
-        System.out.println("GET Response code: " + status);
+        System.out.println("POST Response code: " + status);
 
         if (status == OK) {
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));

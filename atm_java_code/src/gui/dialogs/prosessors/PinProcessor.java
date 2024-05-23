@@ -84,7 +84,7 @@ public class PinProcessor {
 			case 'C':
 				return "";
 			default:
-				if (pin.length() < 6) pin += input;
+				if (pin.length() < 4) pin += input;
 				return pin;
 		}
 	}
