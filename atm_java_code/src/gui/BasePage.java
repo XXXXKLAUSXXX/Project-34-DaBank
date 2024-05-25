@@ -39,7 +39,7 @@ public abstract class BasePage {
         title.setFont(new Font(Font.SANS_SERIF,Font.BOLD,32));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setForeground(Color.BLACK);
-        title.setBounds(GUI_WIDTH / 2 - 300,20,600,100);
+        title.setBounds(GUI_WIDTH / 2 - 150,20,300,100);
         title.setOpaque(true);
         title.setBackground(new Color(215, 170, 35));
         return title;
