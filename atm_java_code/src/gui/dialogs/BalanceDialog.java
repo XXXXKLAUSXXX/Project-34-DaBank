@@ -17,7 +17,7 @@ public class BalanceDialog extends ServerCommDialog{
         KeyCard card = new KeyCard(keyCard);
         try {
             db = GetInfo.post(BANK_IP + API_ENDPOINT + "?target=" + card.getIban(),
-                    "{\"pincode\": " + code + ",\"uid\": \"" + card.getUid() + "\"}");
+                    "{\"pincode\": \"" + code + "\",\"uid\": \"" + card.getUid() + "\"}");
         } catch (IOException e) {
             System.out.println("Balance check went wrong");
         }
@@ -29,31 +29,31 @@ public class BalanceDialog extends ServerCommDialog{
     }
     private String toString(String json) {
         Gson gson = new Gson();
-        BankingData a = gson.fromJson(json, BankingData.class);
+        BankingData a = gson.fromJson(json.replaceAll("[<>]",""), BankingData.class);
         String toReturn = Languages.getLang().getBalance_info();
         toReturn = toReturn.replace("%n",a.getFirstname() + ' ' + a.getLastname());
-        toReturn = toReturn.replace("%b",Integer.toString(a.getBalance()));
+        toReturn = toReturn.replace("%b","£" + (a.getBalance() * 5));
         return "<html>" + toReturn + "</html>";
     }
     @Override
     protected void startUp() {
 
+        getUseKeypad().getDisplayText().setVisible(false);
         // keycard reader
         String keyCard;
         KeyCardProcessor keyCardProcessor = new KeyCardProcessor(getDisplayText());
         keyCard = keyCardProcessor.getRfid();
-        if (keyCard != null) System.out.println(keyCard);
-        else {
+        if (keyCard == null) {
             System.out.println("Could not get rfid.");
             return;
         }
 
+        getUseKeypad().getDisplayText().setVisible(true);
         // pincode
         String pin;
         PinProcessor pinProcessor = new PinProcessor(getDisplayText());
         pin = pinProcessor.getPinCode();
-        if (pin != null) System.out.println(pin);
-        else {
+        if (pin == null) {
             System.out.println("Could not get pin.");
             return;
         }

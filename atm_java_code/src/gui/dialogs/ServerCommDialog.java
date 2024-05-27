@@ -16,12 +16,18 @@ import server.GetInfo;
 
 public abstract class ServerCommDialog extends BaseDialog {
     protected static final String BANK_IP = "https://145.24.223.74:8001/endme/";
+    private final UseKeypadDialog useKeypad = new UseKeypadDialog();
     public ServerCommDialog() {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-100,500,200);
     }
     public ServerCommDialog(int height) {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-(height/2),500,height);
     }
+
+    public UseKeypadDialog getUseKeypad() {
+        return useKeypad;
+    }
+
     public void startTransaction() {
         Thread transaction = new Thread(new CreateDialog(),"TransactionThread");
         transaction.start();
@@ -55,6 +61,10 @@ public abstract class ServerCommDialog extends BaseDialog {
                     + getAttempts(db) + "</html>");
                 break;
             case GetInfo.FORBIDDEN:
+                if (db.contains("daylimit")) {
+                    getDisplayText().setText(language.getDaylimit_found());
+                    return;
+                }
                 getDisplayText().setText(language.getBlocked_account());
                 break;
             case GetInfo.NOT_FOUND:

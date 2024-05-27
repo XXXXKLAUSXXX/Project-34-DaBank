@@ -18,6 +18,7 @@ public class FastWithdrawPage extends ServerCommPage {
         page.add(title);
         page.add(backButton.getButton());
         page.add(serverCommDialog.getDisplayText());
+        page.add(serverCommDialog.getUseKeypad().getDisplayText());
     }
 
     @Override
@@ -25,5 +26,6 @@ public class FastWithdrawPage extends ServerCommPage {
         super.langUpdate();
         title.setText(Languages.getLang().getFast_withdraw_name());
         backButton.langUpdate();
+        serverCommDialog.getUseKeypad().langUpdate();
     }
 }

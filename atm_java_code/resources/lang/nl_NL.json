@@ -25,6 +25,7 @@
 	"amount_not_valid": "Bedrag is te klein",
 	"amount_withdraw": "Totaal bedrag: ",
 	"balance_info": "Naam: %n<br>Saldo: %b",
+	"keypad_please": "Voer alstublieft in<br>via het toetsenbord.",
 	"thank_message": "Hartelijk dank voor het gebruik<br>van Da Bank!",
 
 	"amount_query": "Voer hoeveelheid in: ",
@@ -40,6 +41,7 @@
 	"ok": "Transactie succes",
 	"internal_error": "Er ging iets fout.<br>Excuses voor het ongemak.",
 	"wrong_pin": "Foute pincode<br>Pogingen resterend: ",
+	"daylimit_found": "Daglimiet bereikt.",
 	"blocked_account": "Bankaccount geblokkeerd.",
 	"not_found": "Bank of rekening<br>bestaat niet.",
 	"no_balance": "Onvoldoende saldo",

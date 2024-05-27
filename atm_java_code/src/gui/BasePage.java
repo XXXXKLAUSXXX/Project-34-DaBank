@@ -25,7 +25,7 @@ public abstract class BasePage {
 
     protected static JButton createMenuButton(int x, int y) {
         JButton button = new JButton();
-        button.setSize(500,200);
+        button.setSize(400,200);
         button.setLocation(x,y);
         button.setFocusable(false);
         button.setFont(new Font(Font.SANS_SERIF,Font.BOLD,24));
@@ -39,7 +39,7 @@ public abstract class BasePage {
         title.setFont(new Font(Font.SANS_SERIF,Font.BOLD,32));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setForeground(Color.BLACK);
-        title.setBounds(GUI_WIDTH / 2 - 150,20,300,100);
+        title.setBounds(GUI_WIDTH / 2 - 200,20,400,100);
         title.setOpaque(true);
         title.setBackground(new Color(215, 170, 35));
         return title;

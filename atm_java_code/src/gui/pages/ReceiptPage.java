@@ -29,7 +29,10 @@ public class ReceiptPage extends BasePage {
 	}
 
 	public static void setReceiptInfo(int amount, String iban) {
-		RECEIPT_PAGE.receiptInfo = "P" + amount + "|" + iban + "|" + formatDateTime(ZonedDateTime.now());
+		String idIban = iban.substring(0,8);
+		String uNumLast3 = iban.substring(15);
+		iban = idIban + "#######" + uNumLast3;
+		RECEIPT_PAGE.receiptInfo = "P" + Languages.getLang().getLang() + "|" + amount + "|" + iban + "|" + formatDateTime(ZonedDateTime.now());
 	}
 
 	private static String formatDateTime(ZonedDateTime now) {

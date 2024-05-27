@@ -82,6 +82,11 @@ public class Language {
 	private String balance_info;
 	public String getBalance_info() {return balance_info;}
 
+	private String keypad_please;
+	public String getKeypad_please() {
+		return keypad_please;
+	}
+
 	private String thank_message;
 	public String getThank_message() {return thank_message;}
 
@@ -107,6 +112,11 @@ public class Language {
 
 	private String wrong_pin;
 	public String getWrong_pin() {return wrong_pin;}
+
+	private String daylimit_found;
+	public String getDaylimit_found() {
+		return daylimit_found;
+	}
 
 	private String blocked_account;
 	public String getBlocked_account() {return blocked_account;}

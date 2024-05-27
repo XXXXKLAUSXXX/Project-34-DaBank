@@ -29,6 +29,7 @@ public class GetInfo {
 
     public static String post(String urlString, String json) throws IOException {
         URL url = new URL(urlString);
+        System.out.println(json);
         HttpsURLConnection.setDefaultSSLSocketFactory(Certificate.getSc().getSocketFactory());
         HttpsURLConnection.setDefaultHostnameVerifier(Certificate.getValidHost());
         HttpsURLConnection con = (HttpsURLConnection) url.openConnection();

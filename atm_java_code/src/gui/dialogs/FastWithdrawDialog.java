@@ -14,6 +14,7 @@ public class FastWithdrawDialog extends WithdrawDialog {
     @Override
     protected void startUp() {
 
+        getUseKeypad().getDisplayText().setVisible(true);
         // amount
         int amount;
         AmountProcessor amountProcessor = new AmountProcessor(getDisplayText());
@@ -25,25 +26,24 @@ public class FastWithdrawDialog extends WithdrawDialog {
             return;
         }
         getDisplayText().setText(Languages.getLang().getAmount_withdraw() + amount);
-        System.out.println(amount);
         sleep();
 
+        getUseKeypad().getDisplayText().setVisible(false);
         // keycard reader
         String keyCard;
         KeyCardProcessor keyCardProcessor = new KeyCardProcessor(getDisplayText());
         keyCard = keyCardProcessor.getRfid();
-        if (keyCard != null) System.out.println(keyCard);
-        else {
+        if (keyCard == null) {
             System.out.println("Could not get keycard.");
             return;
         }
 
+        getUseKeypad().getDisplayText().setVisible(true);
         // pincode
         String pin;
         PinProcessor pinProcessor = new PinProcessor(getDisplayText());
         pin = pinProcessor.getPinCode();
-        if (pin != null) System.out.println(pin);
-        else {
+        if (pin == null) {
             System.out.println("Could not get pin.");
             return;
         }

@@ -19,13 +19,12 @@ public class CustomWithdrawDialog extends WithdrawDialog {
     @Override
     protected void startUp() {
 
+        getUseKeypad().getDisplayText().setVisible(true);
         // amount
         int[] amounts;
         CustomBillsProcessor customBillsProcessor = new CustomBillsProcessor(getDisplayText());
         amounts = customBillsProcessor.getAmounts();
-        if (!Arrays.stream(amounts).allMatch(i -> i == 0)) {
-			System.out.println(Arrays.toString(amounts));
-		} else {
+        if (Arrays.stream(amounts).allMatch(i -> i == 0)) {
             System.out.println("Couldn't get amount.");
             getDisplayText().setText(Languages.getLang().getAmount_not_valid());
             return;
@@ -35,22 +34,22 @@ public class CustomWithdrawDialog extends WithdrawDialog {
         System.out.println(amount);
         sleep();
 
+        getUseKeypad().getDisplayText().setVisible(false);
         // keycard reader
         String keyCard;
         KeyCardProcessor keyCardProcessor = new KeyCardProcessor(getDisplayText());
         keyCard = keyCardProcessor.getRfid();
-        if (keyCard != null) System.out.println(keyCard);
-        else {
+        if (keyCard == null) {
             System.out.println("Could not get keycard.");
             return;
         }
 
+        getUseKeypad().getDisplayText().setVisible(true);
         // pincode
         String pin;
         PinProcessor pinProcessor = new PinProcessor(getDisplayText());
         pin = pinProcessor.getPinCode();
-        if (pin != null) System.out.println(pin);
-        else {
+        if (pin == null) {
             System.out.println("Could not get pin.");
             return;
         }

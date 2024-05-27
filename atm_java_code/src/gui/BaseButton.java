@@ -4,11 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class BaseButton {
-    protected static final Font STD_FONT = new Font(Font.SANS_SERIF,Font.BOLD,24);
+    protected static final Font STD_FONT = new Font(Font.SANS_SERIF,Font.BOLD,21);
     protected static final int GUI_WIDTH = GUI.width;
     protected static final int GUI_HEIGHT = GUI.height;
     public static final int LEFT = 20; // Left side on GUI
-    public static final int RIGHT = GUI_WIDTH - 520; // Right side on GUI
+    public static final int RIGHT = GUI_WIDTH - 420; // Right side on GUI
     protected JButton button;
     public static int Y_POS(int position) { // position is between 1 and 3, since there is a maximum of 4 buttons stacked.
         if (position <= 1) return 20; // top
@@ -17,7 +17,7 @@ public abstract class BaseButton {
     }
     public BaseButton() {
         button = new JButton();
-        button.setSize(500,200);
+        button.setSize(400,200);
         button.setFocusable(false);
         button.setFont(STD_FONT);
         button.setForeground(Color.BLACK);

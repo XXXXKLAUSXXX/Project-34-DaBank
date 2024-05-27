@@ -24,7 +24,7 @@ public abstract class WithdrawDialog extends ServerCommDialog {
 			KeyCard card = new KeyCard(keyCard);
 			try {
 				db = GetInfo.post(BANK_IP + API_ENDPOINT + "?target=" + card.getIban(),
-						"{\"amount\": " + amount + ",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
+						"{\"amount\": " + poundToNoob(amount) + ",\"pincode\": \"" + code + "\",\"uid\": \"" + card.getUid() + "\"}");
 			} catch (IOException e) {
 				System.out.println("Pinrequest went wrong");
 			}
@@ -36,5 +36,9 @@ public abstract class WithdrawDialog extends ServerCommDialog {
 			}
 			else handleServerResponseNotOK(db);
 		}
+	}
+
+	private int poundToNoob(int amount) {
+        return (int) ((double) amount / 5.0);
 	}
 }

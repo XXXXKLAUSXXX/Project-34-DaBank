@@ -17,7 +17,6 @@ public abstract class InputHandler {
                 for (int i = 1; i < input.length; i++) {
                     rfid += (char) input[i];
                 }
-                System.out.println(rfid);
                 isNewRfid = true;
             default:
         }

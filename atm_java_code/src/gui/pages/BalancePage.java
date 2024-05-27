@@ -18,6 +18,7 @@ public class BalancePage extends ServerCommPage {
         page.add(title);
         page.add(backButton.getButton());
         page.add(serverCommDialog.getDisplayText());
+        page.add(serverCommDialog.getUseKeypad().getDisplayText());
     }
     public void setVisible(boolean visible) {
         super.setVisible(visible);
@@ -28,5 +29,6 @@ public class BalancePage extends ServerCommPage {
         super.langUpdate();
         title.setText(Languages.getLang().getBalance_name());
         backButton.langUpdate();
+        serverCommDialog.getUseKeypad().langUpdate();
     }
 }

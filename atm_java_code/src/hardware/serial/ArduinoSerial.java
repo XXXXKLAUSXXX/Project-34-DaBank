@@ -7,13 +7,6 @@ public class ArduinoSerial {
     private final SerialPort serialPort;
     private ArduinoHandler arduinoHandler;
     private static ArduinoSerial arduino;
-    static {
-        try {
-            arduino = new ArduinoSerial("/dev/ttyACM0");
-        } catch (SerialPortInvalidPortException e) {
-            System.out.println("Serial port not found");
-        }
-    }
     public ArduinoSerial(String portName) throws SerialPortInvalidPortException {
         serialPort = SerialPort.getCommPort(portName);
         serialPort.setComPortParameters(460800,8,1,0);
@@ -29,6 +22,14 @@ public class ArduinoSerial {
         arduinoHandler = new ArduinoHandler();
 
         serialPort.addDataListener(arduinoHandler);
+    }
+    public static void initArduino() {
+        try {
+            arduino = new ArduinoSerial("/dev/ttyACM0");
+            System.out.println("Serial port opened");
+        } catch (SerialPortInvalidPortException e) {
+            System.out.println("Serial port not found");
+        }
     }
     public static void sendSerial(byte[] data) {
         arduino.serialPort.writeBytes(data,data.length);

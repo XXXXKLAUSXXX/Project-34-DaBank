@@ -17,6 +17,7 @@ public class CustomWithdrawPage extends ServerCommPage {
         page.add(title);
         page.add(backButton.getButton());
         page.add(serverCommDialog.getDisplayText());
+        page.add(serverCommDialog.getUseKeypad().getDisplayText());
     }
 
     @Override
@@ -24,5 +25,6 @@ public class CustomWithdrawPage extends ServerCommPage {
         super.langUpdate();
         title.setText(Languages.getLang().getCustom_withdraw_name());
         backButton.langUpdate();
+        serverCommDialog.getUseKeypad().langUpdate();
     }
 }

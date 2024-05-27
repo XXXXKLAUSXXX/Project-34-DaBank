@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class BaseDialog {
-    protected static final Font STD_FONT = new Font(Font.SANS_SERIF,Font.BOLD,24);
+    protected static final Font STD_FONT = new Font(Font.SANS_SERIF,Font.BOLD,23);
     protected static final int GUI_WIDTH = GUI.width;
     protected static final int GUI_HEIGHT = GUI.height;
     protected final int popupWidth;

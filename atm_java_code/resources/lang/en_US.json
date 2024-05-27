@@ -25,6 +25,7 @@
 	"amount_not_valid": "Amount to low",
 	"amount_withdraw": "Total: ",
 	"balance_info": "Name: %n<br>Balance: %b",
+	"keypad_please": "Please input using<br>the keypad.",
 	"thank_message": "Thanks for using<br>Da Bank!",
 
 	"amount_query": "Please input amount: ",
@@ -40,6 +41,7 @@
 	"ok": "Transaction successful",
 	"internal_error": "Something went wrong.<br>Sorry for the inconvenience.",
 	"wrong_pin": "Wrong pin<br>Tries left: ",
+	"daylimit_found": "Reached your day limit.",
 	"blocked_account": "Account blocked.",
 	"not_found": "Bank or account <br>does not exist.",
 	"no_balance": "Inadequate balance",
