@@ -1,36 +1,20 @@
 package gui.dialogs;
 
-import com.google.gson.Gson;
-import gui.GUI;
 import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.PinProcessor;
-import gui.dialogs.prosessors.RfidProcessor;
-import gui.pages.HomePage;
-import server.BankingData;
+import gui.dialogs.prosessors.KeyCardProcessor;
+import gui.language.Languages;
+import gui.pages.ReceiptPage;
+import hardware.Bills;
 import server.GetInfo;
 
 import java.io.IOException;
 
-public class FastWithdrawDialog extends ServerCommDialog {
-    protected void comm(String rfid, String code, int amount) {
-        if (amount > 1) {
-            String db = "";
-            try {
-                db = GetInfo.post("http://145.24.223.74:8100/api/withdraw",
-                        "{\"target\": \"im00imdb0123456789\",\"uid\": \"" + rfid + "\",\"pincode\":" + code + ",\"amount\": " + amount + "}");
-            } catch (IOException e) {
-                System.out.println("Pinrequest went wrong");
-            }
-            if (GetInfo.getStatus() == 200) {
-                getDisplayText().setText("Transactie succes");
-                System.out.println("OK");
-            }
-            else handleServerResponseNotOK(db);
-        }
-    }
+public class FastWithdrawDialog extends WithdrawDialog {
     @Override
     protected void startUp() {
 
+        getUseKeypad().getDisplayText().setVisible(true);
         // amount
         int amount;
         AmountProcessor amountProcessor = new AmountProcessor(getDisplayText());
@@ -38,41 +22,51 @@ public class FastWithdrawDialog extends ServerCommDialog {
         amount = round(amount);
         if (amount < 1) {
             System.out.println("Couldn't get amount.");
-            getDisplayText().setText("Bedrag is te klein");
+            getDisplayText().setText(Languages.getLang().getAmount_not_valid());
             return;
         }
-        getDisplayText().setText("Afgerond: " + amount);
-        System.out.println(amount);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            System.out.println("Couldn't buy you time");
+        getDisplayText().setText(Languages.getLang().getAmount_withdraw() + amount);
+        sleep();
+
+        getUseKeypad().getDisplayText().setVisible(false);
+        // keycard reader
+        String keyCard;
+        KeyCardProcessor keyCardProcessor = new KeyCardProcessor(getDisplayText());
+        keyCard = keyCardProcessor.getRfid();
+        if (keyCard == null) {
+            System.out.println("Could not get keycard.");
+            return;
         }
 
-        // rfid reader
-        String rfid = "FFFFFFFF";
-//        RfidProcessor rfidProcessor = new RfidProcessor(getDisplayText());
-//        rfid = rfidProcessor.getRfid();
-//        if (rfid != null) System.out.println(rfid);
-//        else {
-//            System.out.println("Could not get rfid.");
-//            return;
-//        }
-
+        getUseKeypad().getDisplayText().setVisible(true);
         // pincode
         String pin;
         PinProcessor pinProcessor = new PinProcessor(getDisplayText());
         pin = pinProcessor.getPinCode();
-        if (pin != null) System.out.println(pin);
-        else {
+        if (pin == null) {
             System.out.println("Could not get pin.");
             return;
         }
-        comm(rfid, pin, amount);
+        comm(keyCard, pin, amount);
     }
     private static int round(int amount) {
         if (amount % 5 < 3) amount -= (amount % 5);
         else amount += 5 - (amount % 5);
         return amount;
+    }
+    private static int[] toBills(int amount) {
+        int[] bills = new int[4];
+        for (int i = 3; i >= 0; i--) {
+            int tmpAmount = amount / Bills.getMultiplier()[i];
+            if (Bills.check(i) < tmpAmount) {
+                bills[i] = Bills.check(i);
+                amount -= Bills.getMultiplier()[i] * Bills.check(i);
+            }
+            else {
+                bills[i] = tmpAmount;
+                amount %= Bills.getMultiplier()[i];
+            }
+        }
+        return bills;
     }
 }

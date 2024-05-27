@@ -1,33 +1,33 @@
 package gui.pages;
 
-import gui.*;
+import gui.BasePage;
 import gui.buttons.PageBaseButton;
-import gui.buttons.pagebuttons.BalanceButton;
-import gui.buttons.pagebuttons.LangButton;
+import gui.buttons.langbuttons.DutchButton;
+import gui.buttons.langbuttons.USEngButton;
+import gui.buttons.pagebuttons.BackButton;
 import gui.buttons.pagebuttons.StopTransactionButton;
-import gui.buttons.pagebuttons.WithdrawButton;
 import gui.language.Languages;
 
-public class ChoicePage extends BasePage{
-    public static final String KEY = "CHOICEPAGE";
+public class LangPage extends BasePage {
+	public static final String KEY = "LANGPAGE";
     private final PageBaseButton[] buttons = {
             new StopTransactionButton(),
-            new LangButton(),
-            new WithdrawButton(),
-            new BalanceButton()
+            new BackButton(ChoicePage.KEY),
     };
-    public ChoicePage() {
+    public LangPage() {
         super();
 
         page.add(title);
         for (PageBaseButton button : buttons) {
             page.add(button.getButton());
         }
+        page.add(new DutchButton().getButton());
+        page.add(new USEngButton().getButton());
     }
 
     @Override
     public void langUpdate() {
-        title.setText(Languages.getLang().getChoice_name());
+        title.setText(Languages.getLang().getLang_name());
         for (PageBaseButton button : buttons) {
             button.langUpdate();
         }

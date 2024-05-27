@@ -1,15 +1,16 @@
 package gui.dialogs.prosessors;
 
-import serial.InputHandler;
+import gui.language.Languages;
+import hardware.serial.InputHandler;
 
 import javax.swing.*;
 
-public class RfidProcessor {
+public class KeyCardProcessor {
 	private volatile String rfid;
 	private final JLabel display;
-	private static final String TEXT = "Scan uw pinpas.";
+	private final String TEXT = Languages.getLang().getKeycard_query();
 	private static volatile boolean going;
-	public RfidProcessor(JLabel display) {
+	public KeyCardProcessor(JLabel display) {
 		this.display = display;
 
 		going = true;
@@ -41,17 +42,20 @@ public class RfidProcessor {
 				display.setText(TEXT);
 				wait();
 				if (!going) throw new InterruptedException();
-				if (rfid.contains("a")) { //TODO
-					System.out.println("TransactionDialog: " + rfid);
+				if (rfid.length() == 26) {
 					going = false;
 					throw new InterruptedException(rfid);
+				}
+				else {
+					System.out.println(rfid);
+					rfid = "";
 				}
 			}
 		}
 	}
 
 	private void rfidProduce() throws InterruptedException {
-		InputHandler.setDataNew(false);
+		InputHandler.setRfid(false);
 		while (true) {
 			synchronized (this) {
 				if (!going) {
@@ -59,9 +63,9 @@ public class RfidProcessor {
 					throw new InterruptedException();
 				}
 				wait(100);
-				if (InputHandler.isNewData()) {
+				if (InputHandler.isNewRfid()) {
 					rfid = InputHandler.getRfid();
-					InputHandler.setDataNew(false);
+					InputHandler.setRfid(false);
 					notify();
 				}
 			}

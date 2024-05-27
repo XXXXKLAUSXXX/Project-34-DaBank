@@ -1,0 +1,49 @@
+{
+	"lang": "en_US",
+
+	"choice_name": "Main menu",
+	"balance_name": "Check balance",
+	"withdraw_menu_name": "Withdraw",
+	"custom_withdraw_name": "Bill choice",
+	"fast_withdraw_name": "Quick withdraw",
+	"receipt_name": "Receipt",
+	"lang_name": "Languages",
+
+	"home_start": "Click anywhere to start",
+	"home_button": "Stop transaction",
+	"back_button": "Back",
+	"main_menu_button": "Main menu",
+	"balance_button": "Check balance",
+	"withdraw_menu_button": "Withdraw",
+	"custom_withdraw_button": "Choose bills",
+	"fast_withdraw_button": "Quickly withdraw",
+	"lang_button": "Language",
+
+	"receipt_query": "Would you like a receipt?",
+	"receipt_aye": "Yes",
+	"receipt_nay": "No",
+	"amount_not_valid": "Amount to low",
+	"amount_withdraw": "Total: ",
+	"balance_info": "Name: %n<br>Balance: %b",
+	"keypad_please": "Please input using<br>the keypad.",
+	"thank_message": "Thanks for using<br>Da Bank!",
+
+	"amount_query": "Please input amount: ",
+	"bills_query": [
+		"5 pound bills: ",
+		"<br><br>10 pound bills: ",
+		"<br><br>20 pound bills: ",
+		"<br><br>50 pound bills: "
+	],
+	"keycard_query": "Please scan your card",
+	"pin_query": "Please enter your pin: ",
+
+	"ok": "Transaction successful",
+	"internal_error": "Something went wrong.<br>Sorry for the inconvenience.",
+	"wrong_pin": "Wrong pin<br>Tries left: ",
+	"daylimit_found": "Reached your day limit.",
+	"blocked_account": "Account blocked.",
+	"not_found": "Bank or account <br>does not exist.",
+	"no_balance": "Inadequate balance",
+	"server_error": "Servers are unreachable<br/>Sorry for the inconvenience"
+}

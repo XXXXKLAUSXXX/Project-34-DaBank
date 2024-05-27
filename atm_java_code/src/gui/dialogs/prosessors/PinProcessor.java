@@ -1,13 +1,14 @@
 package gui.dialogs.prosessors;
 
-import serial.InputHandler;
+import gui.language.Languages;
+import hardware.serial.InputHandler;
 
 import javax.swing.*;
 
 public class PinProcessor {
 	private volatile char keypress;
 	private final JLabel display;
-	private static final String TEXT = "Voer uw pincode in: ";
+	private final String TEXT = Languages.getLang().getPin_query();
 	private String pin;
 	private static volatile boolean going;
 	public PinProcessor(JLabel display) {
@@ -57,7 +58,7 @@ public class PinProcessor {
 	}
 
 	private void keyProduce() throws InterruptedException {
-		InputHandler.setDataNew(false);
+		InputHandler.setKey(false);
 		while (true) {
 			synchronized (this) {
 				if (!going) {
@@ -65,9 +66,9 @@ public class PinProcessor {
 					throw new InterruptedException();
 				}
 				wait(10);
-				if (InputHandler.isNewData()) {
+				if (InputHandler.isNewKey()) {
 					keypress = InputHandler.getKeyPress();
-					InputHandler.setDataNew(false);
+					InputHandler.setKey(false);
 					notify();
 				}
 			}
@@ -83,7 +84,7 @@ public class PinProcessor {
 			case 'C':
 				return "";
 			default:
-				if (pin.length() < 6) pin += input;
+				if (pin.length() < 4) pin += input;
 				return pin;
 		}
 	}

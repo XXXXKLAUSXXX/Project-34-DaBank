@@ -1,4 +1,4 @@
-package serial;
+package hardware.serial;
 
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
@@ -17,10 +17,6 @@ public class ArduinoHandler implements SerialPortDataListener {
         if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_RECEIVED) {
             byte[] inputBuffer = event.getReceivedData();
             InputHandler.handleInput(inputBuffer);
-            String input = "";
-            for (byte i : inputBuffer) {
-                input += (char) i;
-            }
         }
     }
 }
