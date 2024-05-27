@@ -13,7 +13,7 @@ public class BalancePage extends ServerCommPage {
     public BalancePage() {
         super();
 
-        serverCommDialog = new BalanceDialog(receiptDialog);
+        serverCommDialog = new BalanceDialog();
 
         page.add(title);
         page.add(backButton.getButton());
@@ -21,7 +21,6 @@ public class BalancePage extends ServerCommPage {
     }
     public void setVisible(boolean visible) {
         super.setVisible(visible);
-        receiptDialog.setVisible(false);
     }
 
     @Override

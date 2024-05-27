@@ -29,6 +29,12 @@ public class Language {
 	private String fast_withdraw_name;
 	public String getFast_withdraw_name() {return fast_withdraw_name;}
 
+	private String receipt_name;
+	public String getReceipt_name() {return receipt_name;}
+
+	private String lang_name;
+	public String getLang_name() {return lang_name;}
+
 	// knop tekst
 	private String home_start;
 	public String getHome_start() {return home_start;}
@@ -75,6 +81,9 @@ public class Language {
 
 	private String balance_info;
 	public String getBalance_info() {return balance_info;}
+
+	private String thank_message;
+	public String getThank_message() {return thank_message;}
 
 	// processor dialoog texten
 	private String amount_query;

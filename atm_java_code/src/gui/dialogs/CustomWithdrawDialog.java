@@ -5,34 +5,16 @@ import gui.dialogs.prosessors.CustomBillsProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Languages;
+import gui.pages.ReceiptPage;
 import hardware.Bills;
 import server.GetInfo;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class CustomWithdrawDialog extends ServerCommDialog {
-    private static final String API_ENDPOINT = "withdraw";
-    public CustomWithdrawDialog(ReceiptDialog receiptDialog) {
-        super(receiptDialog,300);
-    }
-    protected void comm(String keyCard, String code, int amount) {
-        if (amount > 1) {
-            String db = "";
-            KeyCard card = new KeyCard(keyCard);
-            try {
-                db = GetInfo.post(BANK_IP + API_ENDPOINT + "?target=" + card.getIban(),
-                        "{\"amount\": " + amount + ",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
-            } catch (IOException e) {
-                System.out.println("Pinrequest went wrong");
-            }
-            if (GetInfo.getStatus() == 200) {
-                getDisplayText().setText(Languages.getLang().getOk());
-                receiptDialog.setVisible(true);
-                System.out.println("OK");
-            }
-            else handleServerResponseNotOK(db);
-        }
+public class CustomWithdrawDialog extends WithdrawDialog {
+    public CustomWithdrawDialog() {
+        super(300);
     }
     @Override
     protected void startUp() {

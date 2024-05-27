@@ -6,8 +6,16 @@ import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 public class ArduinoSerial {
     private final SerialPort serialPort;
     private ArduinoHandler arduinoHandler;
-    public ArduinoSerial() throws SerialPortInvalidPortException {
-        serialPort = SerialPort.getCommPort("/dev/ttyACM0");
+    private static ArduinoSerial arduino;
+    static {
+        try {
+            arduino = new ArduinoSerial("/dev/ttyACM0");
+        } catch (SerialPortInvalidPortException e) {
+            System.out.println("Serial port not found");
+        }
+    }
+    public ArduinoSerial(String portName) throws SerialPortInvalidPortException {
+        serialPort = SerialPort.getCommPort(portName);
         serialPort.setComPortParameters(460800,8,1,0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 6);
 
@@ -22,7 +30,7 @@ public class ArduinoSerial {
 
         serialPort.addDataListener(arduinoHandler);
     }
-    public void sendSerial(byte[] data) {
-        serialPort.writeBytes(data,data.length);
+    public static void sendSerial(byte[] data) {
+        arduino.serialPort.writeBytes(data,data.length);
     }
 }

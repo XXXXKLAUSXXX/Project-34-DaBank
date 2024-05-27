@@ -4,36 +4,13 @@ import gui.dialogs.prosessors.AmountProcessor;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Languages;
+import gui.pages.ReceiptPage;
 import hardware.Bills;
 import server.GetInfo;
 
 import java.io.IOException;
 
-public class FastWithdrawDialog extends ServerCommDialog {
-    private static final String API_ENDPOINT = "withdraw";
-
-    public FastWithdrawDialog(ReceiptDialog receiptDialog) {
-        super(receiptDialog);
-    }
-
-    protected void comm(String keyCard, String code, int amount) {
-        if (amount > 1) {
-            String db = "";
-            KeyCard card = new KeyCard(keyCard);
-            try {
-                db = GetInfo.post(BANK_IP + API_ENDPOINT + "?target=" + card.getIban(),
-                        "{\"amount\": " + amount + ",\"pincode\":" + code + ",\"uid\": \"" + card.getUid() + "\"}");
-            } catch (IOException e) {
-                System.out.println("Pinrequest went wrong");
-            }
-            if (GetInfo.getStatus() == 200) {
-                getDisplayText().setText(Languages.getLang().getOk());
-                receiptDialog.setVisible(true);
-                System.out.println("OK");
-            }
-            else handleServerResponseNotOK(db);
-        }
-    }
+public class FastWithdrawDialog extends WithdrawDialog {
     @Override
     protected void startUp() {
 

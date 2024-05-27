@@ -6,6 +6,8 @@
 	"withdraw_menu_name": "Withdraw",
 	"custom_withdraw_name": "Bill choice",
 	"fast_withdraw_name": "Quick withdraw",
+	"receipt_name": "Receipt",
+	"lang_name": "Languages",
 
 	"home_start": "Click anywhere to start",
 	"home_button": "Stop transaction",
@@ -17,12 +19,13 @@
 	"fast_withdraw_button": "Quickly withdraw",
 	"lang_button": "Language",
 
-	"receipt_query": "Would you like a receipt",
+	"receipt_query": "Would you like a receipt?",
 	"receipt_aye": "Yes",
 	"receipt_nay": "No",
 	"amount_not_valid": "Amount to low",
 	"amount_withdraw": "Total: ",
 	"balance_info": "Name: %n<br>Balance: %b",
+	"thank_message": "Thanks for using<br>Da Bank!",
 
 	"amount_query": "Please input amount: ",
 	"bills_query": [

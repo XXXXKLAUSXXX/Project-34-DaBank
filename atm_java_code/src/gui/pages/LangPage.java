@@ -27,7 +27,7 @@ public class LangPage extends BasePage {
 
     @Override
     public void langUpdate() {
-        title.setText(Languages.getLang().getChoice_name());
+        title.setText(Languages.getLang().getLang_name());
         for (PageBaseButton button : buttons) {
             button.langUpdate();
         }

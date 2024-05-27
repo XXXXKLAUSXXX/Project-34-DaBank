@@ -17,6 +17,11 @@ public class ArduinoHandler implements SerialPortDataListener {
         if (event.getEventType() == SerialPort.LISTENING_EVENT_DATA_RECEIVED) {
             byte[] inputBuffer = event.getReceivedData();
             InputHandler.handleInput(inputBuffer);
+            String input = "";
+            for (byte i : inputBuffer) {
+                input += (char) i;
+            }
+            System.out.println(input);
         }
     }
 }

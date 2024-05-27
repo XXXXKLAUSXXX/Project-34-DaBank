@@ -131,7 +131,7 @@ public class CustomBillsProcessor {
 					amounts[i] = Character.getNumericValue(amountChars[i]);
 				}
 				stopKeypad();
-			} catch (InterruptedException ignored) {}
+			} catch (InterruptedException | NumberFormatException ignored) {}
 		}
 	}
 	private class RunnableKeyProducer implements Runnable {

@@ -12,7 +12,7 @@ public class CustomWithdrawPage extends ServerCommPage {
     public CustomWithdrawPage() {
         super();
 
-        serverCommDialog = new CustomWithdrawDialog(receiptDialog);
+        serverCommDialog = new CustomWithdrawDialog();
 
         page.add(title);
         page.add(backButton.getButton());

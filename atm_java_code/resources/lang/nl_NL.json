@@ -6,6 +6,8 @@
 	"withdraw_menu_name": "Geld opnemen",
 	"custom_withdraw_name": "Zelf briefjes kiezen",
 	"fast_withdraw_name": "Snel geld opnemen",
+	"receipt_name": "Bonnetje",
+	"lang_name": "Talen",
 
 	"home_start": "Klik waar dan ook om te beginnen",
 	"home_button": "Stop transactie",
@@ -23,6 +25,7 @@
 	"amount_not_valid": "Bedrag is te klein",
 	"amount_withdraw": "Totaal bedrag: ",
 	"balance_info": "Naam: %n<br>Saldo: %b",
+	"thank_message": "Hartelijk dank voor het gebruik<br>van Da Bank!",
 
 	"amount_query": "Voer hoeveelheid in: ",
 	"bills_query": [

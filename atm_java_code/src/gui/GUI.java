@@ -16,15 +16,10 @@ public abstract class GUI {
     protected static int width;
     protected static int height;
     private static Timer timeOut = new Timer(60000, e -> timeoutAction());
-    private static ArduinoSerial arduino;
     private static String currentPage;
 
     public static void makeGUI() {
-        try {
-            arduino = new ArduinoSerial();
-        } catch (SerialPortInvalidPortException e) {
-            System.out.println("Serial port not found");
-        }
+
         Toolkit tk = Toolkit.getDefaultToolkit();
         width = tk.getScreenSize().width;
         height = tk.getScreenSize().height;
@@ -42,7 +37,8 @@ public abstract class GUI {
         pages.put(CustomWithdrawPage.KEY,new CustomWithdrawPage());
         pages.put(WithdrawPage.KEY,new WithdrawPage());
         pages.put(LangPage.KEY, new LangPage());
-        //pages.put(Eindscherm.KEY,new Eindscherm());
+        pages.put(ReceiptPage.KEY, ReceiptPage.RECEIPT_PAGE);
+        pages.put(EndPage.KEY, new EndPage());
 
         BufferedImage cursorImg = new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB);
         Cursor bankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
@@ -57,7 +53,6 @@ public abstract class GUI {
         }
         pages.get(HomePage.KEY).setVisible(true);
         currentPage = HomePage.KEY;
-        timeOut.stop();
         frame.getContentPane().setBackground(new Color(205,14,14));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setUndecorated(true);
@@ -67,6 +62,8 @@ public abstract class GUI {
         frame.setLocationRelativeTo(null);
         //frame.getContentPane().setCursor(bankCursor); //TODO
         frame.setVisible(true);
+
+        timeOut.stop();
         timeOut.setRepeats(false);
     }
     private static void timeoutAction() {

@@ -16,14 +16,11 @@ import server.GetInfo;
 
 public abstract class ServerCommDialog extends BaseDialog {
     protected static final String BANK_IP = "https://145.24.223.74:8001/endme/";
-    protected final ReceiptDialog receiptDialog;
-    public ServerCommDialog(ReceiptDialog receiptDialog) {
+    public ServerCommDialog() {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-100,500,200);
-        this.receiptDialog = receiptDialog;
     }
-    public ServerCommDialog(ReceiptDialog receiptDialog, int height) {
+    public ServerCommDialog(int height) {
         super((GUI_WIDTH/2-250),GUI_HEIGHT/2-(height/2),500,height);
-        this.receiptDialog = receiptDialog;
     }
     public void startTransaction() {
         Thread transaction = new Thread(new CreateDialog(),"TransactionThread");

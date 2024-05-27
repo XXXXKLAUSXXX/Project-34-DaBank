@@ -8,7 +8,6 @@ import gui.dialogs.ServerCommDialog;
 
 public abstract class ServerCommPage extends BasePage {
     protected ServerCommDialog serverCommDialog; // must be initialised in subclasses!
-    protected final ReceiptDialog receiptDialog = new ReceiptDialog(getPage());
     private final StopTransactionButton stopTransactionButton = new StopTransactionButton();
     private final MainPageButton mainPageButton = new MainPageButton();
     public ServerCommPage() {
@@ -30,7 +29,6 @@ public abstract class ServerCommPage extends BasePage {
     }
     @Override
     public void langUpdate() {
-        receiptDialog.langUpdate();
         stopTransactionButton.langUpdate();
         mainPageButton.langUpdate();
     }

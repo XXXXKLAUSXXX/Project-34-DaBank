@@ -12,10 +12,6 @@ import java.io.IOException;
 public class BalanceDialog extends ServerCommDialog{
     private static final String API_ENDPOINT = "accountinfo";
 
-    public BalanceDialog(ReceiptDialog receiptDialog) {
-        super(receiptDialog);
-    }
-
     protected void comm(String keyCard, String code) {
         String db = "";
         KeyCard card = new KeyCard(keyCard);
@@ -27,7 +23,6 @@ public class BalanceDialog extends ServerCommDialog{
         }
         if (GetInfo.getStatus() == 200) {
             getDisplayText().setText(toString(db));
-            receiptDialog.setVisible(true);
         }
         else handleServerResponseNotOK(db);
 

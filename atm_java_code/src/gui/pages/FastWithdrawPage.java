@@ -13,7 +13,7 @@ public class FastWithdrawPage extends ServerCommPage {
     public FastWithdrawPage() {
         super();
 
-        serverCommDialog = new FastWithdrawDialog(receiptDialog);
+        serverCommDialog = new FastWithdrawDialog();
 
         page.add(title);
         page.add(backButton.getButton());

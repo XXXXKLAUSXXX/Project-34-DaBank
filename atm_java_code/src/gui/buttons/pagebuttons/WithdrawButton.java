@@ -3,6 +3,7 @@ package gui.buttons.pagebuttons;
 import gui.GUI;
 import gui.buttons.PageBaseButton;
 import gui.language.Languages;
+import gui.pages.ReceiptPage;
 import gui.pages.WithdrawPage;
 
 public class WithdrawButton extends PageBaseButton {
