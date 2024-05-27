@@ -7,6 +7,7 @@
 #define SG_PIN 7  // Adafruit IotP for spare grounding
 
 typedef struct printinfo {
+  String lang;
   String amount;
   String iban;
   String date;
@@ -33,10 +34,6 @@ void printReceipt() {
     String input = Serial.readString();
     if (identifier == 'P') {
       info = toPrintinfo(input);
-      Serial.println(info.amount);
-      Serial.println(info.iban);
-      Serial.println(info.date);
-      Serial.println(info.time);
     }
     else return;
   }
@@ -48,21 +45,33 @@ void printReceipt() {
   printer.boldOn();
   printer.println(F("\n  Isle of Man    Da Bank\n"));
   printer.boldOff();
-
   printer.setSize('S');
   printer.println(F("--------------------------------"));
   printer.justify('L');
-  printer.println("Opgenomen bedrag: " + info.amount);
-  printer.println("IBAN: " + info.iban);
-  printer.println("Datum: " + info.date);
-  printer.println("Tijd: " + info.time);
+  if (info.lang.equals("nl_NL")) {
+    printer.println("Opgenomen bedrag: " + info.amount + ",00 IMP");
+    printer.println("IBAN: " + info.iban);
+    printer.println("Datum: " + info.date);
+    printer.println("Tijd: " + info.time);
+  }
+  else {
+    printer.println("Money withdrawn: " + info.amount + ",00 IMP");
+    printer.println("IBAN: " + info.iban);
+    printer.println("Date: " + info.date);
+    printer.println("Time: " + info.time);
+  }
   printer.justify('C');
   printer.println(F("--------------------------------"));
   printer.println(F("Wijnhaven 107, Rotterdam"));
   printer.setSize('L');
   printer.boldOn();
   printer.doubleHeightOn();
-  printer.println(F(" \nBedankt!\n Tot ziens! \n\n\n"));
+  if (info.lang.equals("nl_NL")) {
+    printer.println(F(" \nBedankt!\n Tot ziens! \n\n\n"));
+  }
+  else {
+    printer.println(F(" \nThanks!\n Goodbye! \n\n\n"));
+  }
 
   printer.sleep();      // Tell printer to sleep
   delay(100L);         // Sleep for 3 seconds
@@ -82,6 +91,7 @@ printinfo toPrintinfo(String input) {
   printinfo info;
   char separator = '|';
 
+  input = substr(input, &info.lang, separator);
   input = substr(input, &info.amount, separator); // get amount
   input = substr(input, &info.iban, separator);
   input = substr(input, &info.date, separator);
