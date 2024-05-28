@@ -7,7 +7,6 @@ int offset = 2;
 long amount = 0;
 int CB = countBoxes;
 int demands[countBoxes];
-bool flag36 = 0;
 
 int storage[countBoxes][2] = {
   //{Amount of cards, denomination},
