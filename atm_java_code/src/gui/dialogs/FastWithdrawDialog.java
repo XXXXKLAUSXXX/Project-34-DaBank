@@ -20,6 +20,8 @@ public class FastWithdrawDialog extends WithdrawDialog {
         AmountProcessor amountProcessor = new AmountProcessor(getDisplayText());
         amount = amountProcessor.getAmount();
         amount = round(amount);
+        int[] amounts = toBills(amount);
+        amount = total(amounts);
         if (amount < 1) {
             System.out.println("Couldn't get amount.");
             getDisplayText().setText(Languages.getLang().getAmount_not_valid());
@@ -48,7 +50,14 @@ public class FastWithdrawDialog extends WithdrawDialog {
             return;
         }
         comm(keyCard, pin, amount);
-        spitMoney(toBills(amount));
+        spitMoney(amounts);
+    }
+    private static int total(int[] amounts) {
+        int total = 0;
+        for (int amount : amounts) {
+            total += amount;
+        }
+        return total;
     }
     private static int round(int amount) {
         if (amount % 5 < 3) amount -= (amount % 5);

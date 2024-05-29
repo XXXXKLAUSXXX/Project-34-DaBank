@@ -22,7 +22,7 @@
 	"receipt_query": "Wilt u een bonnetje?",
 	"receipt_aye": "Ja",
 	"receipt_nay": "Nee",
-	"amount_not_valid": "Bedrag is te klein",
+	"amount_not_valid": "Bedrag is te laag",
 	"amount_withdraw": "Totaal bedrag: ",
 	"balance_info": "Naam: %n<br>Saldo: %b",
 	"keypad_please": "Voer alstublieft in<br>via het toetsenbord.",
