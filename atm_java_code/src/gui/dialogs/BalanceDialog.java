@@ -40,7 +40,7 @@ public class BalanceDialog extends ServerCommDialog{
         String firstName = a.getFirstname().substring(0, Math.min(a.getFirstname().length(), 30));
         String lastName = a.getLastname().substring(0, Math.min(a.getLastname().length(), 30));
         toReturn = toReturn.replace("%n",firstName + ' ' + lastName);
-        String amount = String.format("%.2f",(double) a.getBalance() * 0.008);
+        String amount = String.format("%.2f",(double) a.getBalance() * 0.0085);
         toReturn = toReturn.replace("%b","£" + amount);
         return "<html>" + toReturn + "</html>";
     }
