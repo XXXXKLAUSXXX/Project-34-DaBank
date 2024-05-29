@@ -5,8 +5,8 @@
 //the components
 #define countBoxes 4  //CountBoxes, the amount of boxes
 const int CB = countBoxes;
-const int ir[countBoxes] = { 30, 31, 32, 33 };       //the physical pins of the sensor output
-const int motor[countBoxes] = { 34, 35, 36, 37 };  //the physical pin of the motor output, in out circuit we have it connected to a driver
+const int ir[countBoxes] = { 32, 34, 36, 38 };       //the physical pins of the sensor output
+const int motor[countBoxes] = { 31, 33, 35, 37 };  //the physical pin of the motor output, in out circuit we have it connected to a driver
 
 
 
