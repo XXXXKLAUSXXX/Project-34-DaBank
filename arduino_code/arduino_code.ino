@@ -1,6 +1,7 @@
 #include "keypad.h"
 #include "rfid.h"
 #include "receipt_printer.h"
+#include "money_dispensers.h"
 
 void setup() {
   Serial.begin(460800);
@@ -15,6 +16,14 @@ void loop() {
   getRfid();
   getKeypad();
 
-  printReceipt();
-  spitMoney();
+  if (Serial.available() > 0) {
+    char identifier = (char) Serial.read();
+    if (identifier == 'P') {
+      printReceipt();
+    }
+    else if (identifier == 'B') {
+      spitMoney();
+      digitalWrite(13,HIGH);
+    }
+  }
 }

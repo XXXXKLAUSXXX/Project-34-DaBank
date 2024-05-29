@@ -1,3 +1,4 @@
+#include "HardwareSerial.h"
 #include "Arduino.h"
 // Proper order of the functions
   
@@ -5,8 +6,8 @@
 //the components
 #define countBoxes 4  //CountBoxes, the amount of boxes
 const int CB = countBoxes;
-const int ir[countBoxes] = { 32, 34, 36, 38 };       //the physical pins of the sensor output
-const int motor[countBoxes] = { 31, 33, 35, 37 };  //the physical pin of the motor output, in out circuit we have it connected to a driver
+const int ir[countBoxes] = { 30, 32, 34, 36 };      //the physical pins of the sensor output
+const int motor[countBoxes] = { 31, 33, 35, 37 };   //the physical pin of the motor output, in out circuit we have it connected to a driver
 
 
 
@@ -17,15 +18,6 @@ bool flag[countBoxes] = { 0, 0, 0, 0 };    // filled in setup, filled with 0/fal
 #define commL countBoxes
 const int commLenght = commL;  //one byte per box
 byte buffer[commLenght];
-
-void spitMoney() {
-  if (readSerial() ) { // reads the serial, the terminator value is 127 which is a non character in utf-8
-    handleInput(); // sets demands based of the content of the buffer.
-    while (liveDemands() > 0) {
-      runBoxes();
-    }
-  }
-}
 
 void initDispensers() {
   for (int i = 0; i < CB; i++) {
@@ -62,14 +54,8 @@ void handleInput() {
   }
 }
 
-bool readSerial() {
-  if (Serial.available() > 0) {
-    char identifier = (char)Serial.read();
-    if (identifier == 'B') {
-      Serial.readBytesUntil(127, buffer, commL);
-      return true;
-    } else false;
-  } else false;
+void readSerial() {
+  Serial.readBytesUntil(127, buffer, commL);
 }
 
 
@@ -84,5 +70,14 @@ int liveDemands() {
 void clearBuffer() {
   for (int i = 0; i < commLenght; i++) {
     buffer[i] = 0;
+  }
+}
+
+void spitMoney() {
+  readSerial();
+  handleInput();
+  while (liveDemands()) {
+  runBoxes();
+  delay(1);
   }
 }

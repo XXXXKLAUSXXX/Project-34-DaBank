@@ -28,15 +28,9 @@ void initPrinter() {
 void printReceipt() {
   printinfo info;
 
-  if (Serial.available() > 0) {
-    char identifier = (char) Serial.read();
-    String input = Serial.readString();
-    if (identifier == 'P') {
-      info = toPrintinfo(input);
-    }
-    else return;
-  }
-  else return;
+  String input = Serial.readString();
+  info = toPrintinfo(input);
+    
 
   printer.setFont('A');
   printer.justify('C');
