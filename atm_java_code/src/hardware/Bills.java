@@ -1,7 +1,7 @@
 package hardware;
 
 public class Bills {
-    private static int[] bills = {15,15,15,15};
+    private static int[] bills = {15,0,15,15};
     private static final int[] multiplier = {5,10,20,50};
 
     public static void reduce(int bill, int amount) {

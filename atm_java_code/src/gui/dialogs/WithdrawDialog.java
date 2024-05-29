@@ -3,6 +3,7 @@ package gui.dialogs;
 import gui.GUI;
 import gui.language.Languages;
 import gui.pages.ReceiptPage;
+import hardware.Bills;
 import hardware.serial.ArduinoSerial;
 import server.GetInfo;
 
@@ -45,6 +46,7 @@ public abstract class WithdrawDialog extends ServerCommDialog {
 		byte[] toSend = {'B',0,0,0,0};
 		for (int i = 0; i < 4; i++) {
 			toSend[i+1] = (byte) amounts[i];
+			Bills.reduce(i,amounts[i]);
 		}
 		ArduinoSerial.sendSerial(toSend);
 	}
