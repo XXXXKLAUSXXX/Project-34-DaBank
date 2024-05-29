@@ -1,13 +1,17 @@
 package gui.dialogs;
 
 import com.google.gson.Gson;
+import gui.GUI;
 import gui.dialogs.prosessors.PinProcessor;
 import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Languages;
+import gui.pages.HomePage;
 import server.BankingData;
 import server.GetInfo;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Locale;
 
 public class BalanceDialog extends ServerCommDialog{
     private static final String API_ENDPOINT = "accountinfo";
@@ -23,6 +27,8 @@ public class BalanceDialog extends ServerCommDialog{
         }
         if (GetInfo.getStatus() == 200) {
             getDisplayText().setText(toString(db));
+            delay(40000);
+            GUI.gotoPage(HomePage.KEY);
         }
         else handleServerResponseNotOK(db);
 
@@ -31,8 +37,11 @@ public class BalanceDialog extends ServerCommDialog{
         Gson gson = new Gson();
         BankingData a = gson.fromJson(json.replaceAll("[<>]",""), BankingData.class);
         String toReturn = Languages.getLang().getBalance_info();
-        toReturn = toReturn.replace("%n",a.getFirstname() + ' ' + a.getLastname());
-        toReturn = toReturn.replace("%b","£" + (a.getBalance() * 5));
+        String firstName = a.getFirstname().substring(0, Math.min(a.getFirstname().length(), 30));
+        String lastName = a.getLastname().substring(0, Math.min(a.getLastname().length(), 30));
+        toReturn = toReturn.replace("%n",firstName + ' ' + lastName);
+        String amount = String.format("%.2f",(double) a.getBalance() * 0.008);
+        toReturn = toReturn.replace("%b","£" + amount);
         return "<html>" + toReturn + "</html>";
     }
     @Override

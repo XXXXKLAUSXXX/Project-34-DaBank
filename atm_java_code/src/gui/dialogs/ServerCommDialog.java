@@ -79,12 +79,15 @@ public abstract class ServerCommDialog extends BaseDialog {
             default:
                 System.out.println("A new responsecode just dropped! " + GetInfo.getStatus());
         }
+        delay(2000);
+        GUI.gotoPage(ChoicePage.KEY);
+    }
+    protected void delay(int milliseconds) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             System.out.println("Couldn't buy time");
         }
-        GUI.gotoPage(ChoicePage.KEY);
     }
     protected int getAttempts(String json) {
         Gson gson = new Gson();

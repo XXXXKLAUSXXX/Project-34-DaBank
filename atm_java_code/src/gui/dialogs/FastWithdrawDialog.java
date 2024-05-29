@@ -48,6 +48,7 @@ public class FastWithdrawDialog extends WithdrawDialog {
             return;
         }
         comm(keyCard, pin, amount);
+        spitMoney(toBills(amount));
     }
     private static int round(int amount) {
         if (amount % 5 < 3) amount -= (amount % 5);
@@ -55,6 +56,8 @@ public class FastWithdrawDialog extends WithdrawDialog {
         return amount;
     }
     private static int[] toBills(int amount) {
+        if (amount < 0) return new int[]{0,0,0,0}; // niet minder dan 0
+
         int[] bills = new int[4];
         for (int i = 3; i >= 0; i--) {
             int tmpAmount = amount / Bills.getMultiplier()[i];

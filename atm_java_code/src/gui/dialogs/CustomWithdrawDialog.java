@@ -54,6 +54,7 @@ public class CustomWithdrawDialog extends WithdrawDialog {
             return;
         }
         comm(keyCard, pin, amount);
+        spitMoney(amounts);
     }
     private int getTotal(int[] amounts) {
         int total = 0;
