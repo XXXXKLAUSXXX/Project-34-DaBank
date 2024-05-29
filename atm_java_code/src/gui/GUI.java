@@ -60,7 +60,7 @@ public abstract class GUI {
         frame.setLayout(null);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        //frame.getContentPane().setCursor(bankCursor); //TODO
+        frame.getContentPane().setCursor(bankCursor); //TODO
         frame.setVisible(true);
 
         timeOut.stop();

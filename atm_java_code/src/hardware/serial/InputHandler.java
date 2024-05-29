@@ -9,7 +9,6 @@ public abstract class InputHandler {
         switch ((char) input[0]) {
             case 'N':
                 keyPress = (char) input[1];
-                System.out.println(keyPress);
                 isNewKey = true;
                 break;
             case 'R':
@@ -18,7 +17,6 @@ public abstract class InputHandler {
                 for (int i = 1; i < input.length; i++) {
                     rfid += (char) input[i];
                 }
-                System.out.println(rfid);
                 isNewRfid = true;
             default:
         }
