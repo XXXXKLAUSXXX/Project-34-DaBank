@@ -3,6 +3,8 @@ package gui.dialogs;
 import gui.GUI;
 import gui.language.Languages;
 import gui.pages.ReceiptPage;
+import hardware.Bills;
+import hardware.serial.ArduinoSerial;
 import server.GetInfo;
 
 import java.io.IOException;
@@ -30,15 +32,22 @@ public abstract class WithdrawDialog extends ServerCommDialog {
 			}
 			if (GetInfo.getStatus() == 200) {
 				getDisplayText().setText(Languages.getLang().getOk());
-				System.out.println("OK");
 				ReceiptPage.setReceiptInfo(amount,card.getIban());
 				GUI.gotoPage(ReceiptPage.KEY);
 			}
 			else handleServerResponseNotOK(db);
 		}
 	}
-
 	private int poundToNoob(int amount) {
-        return (int) ((double) amount / 5.0);
+        return (int) ((double) amount / 0.0085);
+	}
+
+	protected void spitMoney(int[] amounts) {
+		byte[] toSend = {'B',0,0,0,0};
+		for (int i = 0; i < 4; i++) {
+			toSend[i+1] = (byte) amounts[i];
+			Bills.reduce(i,amounts[i]);
+		}
+		ArduinoSerial.sendSerial(toSend);
 	}
 }

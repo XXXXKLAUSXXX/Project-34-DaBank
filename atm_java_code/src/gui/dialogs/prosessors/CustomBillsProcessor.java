@@ -87,7 +87,6 @@ public class CustomBillsProcessor {
 				if (InputHandler.isNewKey()) {
 					keypress = InputHandler.getKeyPress();
 					InputHandler.setKey(false);
-					System.out.println(keypress);
 					notify();
 				}
 			}
