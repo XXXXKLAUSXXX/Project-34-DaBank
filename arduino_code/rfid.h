@@ -87,7 +87,7 @@ void getRfid() {
   }
   Serial.print(toSend);
 
-  delay(100); // Niet direct verder lezen
+  delay(1000); // Niet direct verder lezen
 
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();

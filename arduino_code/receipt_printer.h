@@ -1,4 +1,3 @@
-#include "HardwareSerial.h"
 #include <Adafruit_Thermal.h>
 #include <SoftwareSerial.h>
 
@@ -20,7 +19,7 @@ SoftwareSerial mySerial(RX_PIN, TX_PIN); // Declare SoftwareSerial obj first
 Adafruit_Thermal printer(&mySerial);     // Pass addr to printer constructor
 
 void initPrinter() {
-  pinMode(SG_PIN, OUTPUT); digitalWrite(7, LOW);
+  pinMode(SG_PIN, OUTPUT); digitalWrite(7, LOW); // make spare ground
 
   mySerial.begin(19200);  // Initialize SoftwareSerial
   printer.begin();        // Init printer (same regardless of serial type)
@@ -29,15 +28,9 @@ void initPrinter() {
 void printReceipt() {
   printinfo info;
 
-  if (Serial.available() > 0) {
-    char identifier = (char) Serial.read();
-    String input = Serial.readString();
-    if (identifier == 'P') {
-      info = toPrintinfo(input);
-    }
-    else return;
-  }
-  else return;
+  String input = Serial.readString();
+  info = toPrintinfo(input);
+    
 
   printer.setFont('A');
   printer.justify('C');
@@ -74,7 +67,7 @@ void printReceipt() {
   }
 
   printer.sleep();      // Tell printer to sleep
-  delay(100L);         // Sleep for 3 seconds
+  delay(100L);
   printer.wake();       // MUST wake() before printing again, even if reset
   printer.setDefault(); // Restore printer to defaults
 }
