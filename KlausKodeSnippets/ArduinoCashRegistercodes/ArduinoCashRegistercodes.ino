@@ -11,7 +11,7 @@ const int motor[countBoxes] = { 8, 9, 10, 11 };  //the physical pin of the motor
 
 
 
-int demands[countBoxes] = { 3, 3, 3, 3 };  // filled in setup, auto increments
+int demands[countBoxes] = { 0, 6, 0, 0 };  // filled in setup, auto increments
 bool flag[countBoxes] = { 0, 0, 0, 0 };    // filled in setup, filled with 0/false
 
 
@@ -28,9 +28,13 @@ void setup() {
 
 void loop() {
   // testHardware();
+    runBoxes();
+
+
 }
 
 void runBoxes() {
+  static long delay[countBoxes];
   for (int i = 0; i < CB; i++) {
     //
     digitalWrite(motor[i], (demands[i] > 0));  //If we want a card, run the motor
@@ -42,6 +46,7 @@ void runBoxes() {
     if (digitalRead(ir[i])) {  //_once_ there is no card infront of the ir sensor
       demands[i] -= flag[i];   //decrement the amount we still need to expel
       flag[i] = 0;             //lower the flag
+      delay[i] = 0;
     } else {
       flag[i] = 1;  //if there is a card infron of the ir sensor raise the flag.
     }
