@@ -31,8 +31,12 @@ public class BalanceDialog extends ServerCommDialog{
         Gson gson = new Gson();
         BankingData a = gson.fromJson(json.replaceAll("[<>]",""), BankingData.class);
         String toReturn = Languages.getLang().getBalance_info();
-        toReturn = toReturn.replace("%n",a.getFirstname() + ' ' + a.getLastname());
-        toReturn = toReturn.replace("%b","£" + (a.getBalance() * 5));
+        String firstname, lastname;
+        firstname = a.getFirstname().substring(0,Math.min(a.getFirstname().length(),30));
+        lastname = a.getLastname().substring(0,Math.min(a.getLastname().length(),30));
+        toReturn = toReturn.replace("%n",firstname + ' ' + lastname);
+        String amount = String.format("%.2f",(double) a.getBalance() * 0.0085);
+        toReturn = toReturn.replace("%b","£" + amount);
         return "<html>" + toReturn + "</html>";
     }
     @Override

@@ -25,7 +25,7 @@ public class ArduinoSerial {
     }
     public static void initArduino() {
         try {
-            arduino = new ArduinoSerial("/dev/ttyACM0");
+            arduino = new ArduinoSerial("COM6");
             System.out.println("Serial port opened");
         } catch (SerialPortInvalidPortException e) {
             System.out.println("Serial port not found");

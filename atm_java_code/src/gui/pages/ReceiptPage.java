@@ -49,6 +49,8 @@ public class ReceiptPage extends BasePage {
 	}
 
 	private void printReceipt() {
+		byte[] filler = {'P',1,1,1,1,127};
+		ArduinoSerial.sendSerial(filler);
 		ArduinoSerial.sendSerial(receiptInfo.getBytes());
 		GUI.gotoPage(EndPage.KEY);
 	}

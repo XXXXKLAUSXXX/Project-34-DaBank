@@ -39,6 +39,6 @@ public abstract class WithdrawDialog extends ServerCommDialog {
 	}
 
 	private int poundToNoob(int amount) {
-        return (int) ((double) amount / 5.0);
+        return (int) ((double) amount / 0.0085);
 	}
 }

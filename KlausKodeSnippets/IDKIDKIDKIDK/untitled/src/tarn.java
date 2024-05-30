@@ -112,7 +112,7 @@ i=0;
         byte[] output2 = {4,2,3,1,'B', 127}; // amount: 36, demands 1,1,1,1
         byte[] output3 = {'B', 2,2,2,2,127}; // amount: 121, demands 1,2,3,4
         byte[] output4 = {'B', 3,4,2,1,127}; // storage[i][0]: 40,88,10,14
-        byte[] output5 = {36, i++, 1, 1, 1, 1, 127}; // storage[i][0]: 41,89,11,15
+        byte[] output5 = {'B', 1,2,3,1, 2,127}; // storage[i][0]: 41,89,11,15
         byte[] output6 = {33, i++, 37, 1, 1, 1, 127}; // amount: 37, demands 2,1,1,1, storage[i][0]: 38,88,10,14
         byte[] output7 = {34, i++, 20, 5, 5, 2, 127}; // amount: 135, demands 20,5,5,2
         inputs.add(output1);

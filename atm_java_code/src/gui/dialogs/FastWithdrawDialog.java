@@ -6,9 +6,11 @@ import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Languages;
 import gui.pages.ReceiptPage;
 import hardware.Bills;
+import hardware.serial.ArduinoSerial;
 import server.GetInfo;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class FastWithdrawDialog extends WithdrawDialog {
     @Override
@@ -48,6 +50,16 @@ public class FastWithdrawDialog extends WithdrawDialog {
             return;
         }
         comm(keyCard, pin, amount);
+
+        int[] amounts =toBills(amount);
+        byte[] outputByte = new byte[amounts.length + 2];
+        outputByte[0] = 'B';
+        for (int i = 0; i < amounts.length; i++) {
+            outputByte[i+1] = (byte)amounts[i];
+            outputByte[i+2] = 127;
+        }
+        System.out.println(Arrays.toString(outputByte));
+        if (GetInfo.getStatus() == 200) ArduinoSerial.sendSerial(outputByte);
     }
     private static int round(int amount) {
         if (amount % 5 < 3) amount -= (amount % 5);

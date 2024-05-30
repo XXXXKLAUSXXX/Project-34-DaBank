@@ -7,6 +7,7 @@ import gui.dialogs.prosessors.KeyCardProcessor;
 import gui.language.Languages;
 import gui.pages.ReceiptPage;
 import hardware.Bills;
+import hardware.serial.ArduinoSerial;
 import server.GetInfo;
 
 import java.io.IOException;
@@ -54,6 +55,15 @@ public class CustomWithdrawDialog extends WithdrawDialog {
             return;
         }
         comm(keyCard, pin, amount);
+
+        byte[] outputByte = new byte[amounts.length + 2];
+        outputByte[0] = 'B';
+        for (int i = 0; i < amounts.length; i++) {
+            outputByte[i+1] = (byte)amounts[i];
+        outputByte[i+2] = 127;
+        }
+        System.out.println(Arrays.toString(outputByte));
+        if (GetInfo.getStatus() == 200) ArduinoSerial.sendSerial(outputByte);
     }
     private int getTotal(int[] amounts) {
         int total = 0;

@@ -5,38 +5,30 @@
 
 void setup() {
   Serial.begin(460800);
-  // Serial.setTimeout(50);
+  Serial.setTimeout(50);
+  pinMode(13, OUTPUT);
+  digitalWrite(13, 0);
 
-   initRfid();
-   initPrinter();
+  initRfid();
+  initPrinter();
   initDispensers();
 }
 
 void loop() {
-      digitalWrite(13,ir[1]);
-  // getRfid();
-  // getKeypad();
-  // runBoxes();
-  if (Serial.available() > 0) {
- Serial.readBytesUntil(127, buffer, commL);
-    if (buffer[0] == 'P') {
-      // runprintReceipt();
-    }
-    else if (buffer[0] == 'B') {
-     
-      handleInput();
 
+  getRfid();
+  getKeypad();
+
+  runBoxes();
+  clearBuffer();
+  if (Serial.available() > 0) {
+    Serial.readBytesUntil(127, buffer, commLenght);
+    if (buffer[0] == 'P') {
+      printReceipt();
+    } else if (buffer[0] == 'B') {
+      handleInput();
     }
   }
-//
-    int test = 1;
-    switch (test){
-      case 0:
-       digitalWrite(13, (buffer[1] == 3 && buffer[2] == 4 && buffer[3] == 2 && buffer[4] == 1));
-      break;
-      default:
-      break;
-    }
 
-//
+  //
 }
